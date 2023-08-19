@@ -5,22 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Helvetica Neue', sans-serif;
+            background-color: #f7f8f9;
+            margin: 0;
+            padding: 0;
         }
         
         header {
             text-align: center;
-            background-color: #333;
+            background-color: #000;
             color: white;
             padding: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
         
         nav ul {
             list-style: none;
             display: flex;
             justify-content: center;
-            background-color: #f4f4f4;
+            background-color: #fff;
             padding: 10px 0;
+            border-bottom: 1px solid #ccc;
         }
         
         nav ul li {
@@ -30,39 +35,61 @@
         nav a {
             text-decoration: none;
             color: #333;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+        
+        nav a:hover {
+            color: #000;
         }
         
         section {
             padding: 20px;
+            background-color: white;
+            margin: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            display: none;
         }
-        
-        input[type="text"], textarea {
+
+        textarea {
             width: 100%;
             padding: 10px;
             margin-bottom: 10px;
-            border: 1px solid #ccc;
+            border: none;
+            box-shadow: inset 0px 0px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            resize: vertical;
         }
-        
+
         button {
             padding: 10px 20px;
-            background-color: #333;
+            background-color: #000;
             color: white;
             border: none;
             cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.2s;
         }
-        
+
         button:hover {
-            background-color: #555;
+            background-color: #111;
         }
-        
-        #dashboard-content {
-            margin-top: 20px;
+
+        ul {
+            list-style-type: none;
+            padding-left: 20px;
+            margin-top: 10px;
         }
-        
-        #dashboard-content p {
+
+        ul li {
+            margin-bottom: 8px;
+        }
+
+        #journal-entries p {
             margin: 10px 0;
-            border-bottom: 1px solid #ccc;
             padding-bottom: 5px;
+            border-bottom: 1px solid #ddd;
         }
     </style>
     <title>Productivity App</title>
@@ -84,7 +111,7 @@
             <!-- Saved journal entries and todo items will be displayed here -->
         </div>
     </section>
-    <section id="todo" style="display: none;">
+    <section id="todo">
         <h2>To-Do List</h2>
         <ul id="todo-list">
             <!-- Todo items will be dynamically added here -->
@@ -92,7 +119,7 @@
         <input type="text" id="todo-input" placeholder="Add a new task">
         <button id="add-todo">Add</button>
     </section>
-    <section id="journal" style="display: none;">
+    <section id="journal">
         <h2>Journal</h2>
         <textarea id="journal-text" placeholder="Write your thoughts here"></textarea>
         <button id="save-journal">Save</button>
@@ -126,7 +153,6 @@
 
         document.getElementById('save-journal').addEventListener('click', function() {
             const journalText = document.getElementById('journal-text').value;
-            const dashboardContent = document.getElementById('dashboard-content');
             const journalEntries = document.getElementById('journal-entries');
             const currentDate = new Date().toLocaleString();
             const journalEntry = document.createElement('p');
