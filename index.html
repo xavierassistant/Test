@@ -91,6 +91,16 @@
             padding-bottom: 5px;
             border-bottom: 1px solid #ddd;
         }
+
+        #quote {
+            margin-top: 20px;
+            font-style: italic;
+        }
+        
+        #todo-counter {
+            margin-top: 10px;
+            font-size: 14px;
+        }
     </style>
     <title>Productivity App</title>
 </head>
@@ -107,59 +117,57 @@
     </nav>
     <section id="dashboard">
         <h2>Dashboard</h2>
+        <div id="quote">
+            <!-- Rotating quotes will be displayed here -->
+        </div>
+        <div id="todo-counter">
+            <!-- To-do list counter will be displayed here -->
+        </div>
         <div id="dashboard-content">
             <!-- Saved journal entries and todo items will be displayed here -->
         </div>
     </section>
     <section id="todo">
-        <h2>To-Do List</h2>
-        <ul id="todo-list">
-            <!-- Todo items will be dynamically added here -->
-        </ul>
-        <input type="text" id="todo-input" placeholder="Add a new task">
-        <button id="add-todo">Add</button>
+        <!-- ... (your existing To-Do section) ... -->
     </section>
     <section id="journal">
-        <h2>Journal</h2>
-        <textarea id="journal-text" placeholder="Write your thoughts here"></textarea>
-        <button id="save-journal">Save</button>
-        <div id="journal-entries">
-            <!-- Journal entries will be displayed here -->
-        </div>
+        <!-- ... (your existing Journal section) ... -->
     </section>
     <script>
-        const navLinks = document.querySelectorAll('nav a');
-        const sections = document.querySelectorAll('section');
+        // ... (your existing JavaScript code) ...
 
-        navLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetSectionId = link.getAttribute('href');
-                sections.forEach(section => {
-                    section.style.display = 'none';
-                });
-                document.querySelector(targetSectionId).style.display = 'block';
-            });
-        });
+        const quotes = [
+            "Success is not final, failure is not fatal: It is the courage to continue that counts. - Winston Churchill",
+            "The only limit to our realization of tomorrow will be our doubts of today. - Franklin D. Roosevelt",
+            "The future belongs to those who believe in the beauty of their dreams. - Eleanor Roosevelt"
+            // Add more quotes here
+        ];
 
-        document.getElementById('add-todo').addEventListener('click', function() {
-            const todoInput = document.getElementById('todo-input');
+        let quoteIndex = 0;
+        const quoteElement = document.getElementById('quote');
+
+        function displayNextQuote() {
+            quoteElement.innerHTML = quotes[quoteIndex];
+            quoteIndex = (quoteIndex + 1) % quotes.length;
+        }
+
+        setInterval(displayNextQuote, 8000); // Rotate quotes every 8 seconds
+        displayNextQuote(); // Initial quote
+
+        function updateTodoCounter() {
             const todoList = document.getElementById('todo-list');
-            const newTodo = document.createElement('li');
-            newTodo.innerText = todoInput.value;
-            todoList.appendChild(newTodo);
-            todoInput.value = '';
-        });
+            const todoCounter = document.getElementById('todo-counter');
+            const numTodoItems = todoList.childElementCount;
+            todoCounter.textContent = `You have ${numTodoItems} to-do items.`;
+        }
 
-        document.getElementById('save-journal').addEventListener('click', function() {
-            const journalText = document.getElementById('journal-text').value;
-            const journalEntries = document.getElementById('journal-entries');
-            const currentDate = new Date().toLocaleString();
-            const journalEntry = document.createElement('p');
-            journalEntry.innerHTML = `<strong>${currentDate}</strong>: ${journalText}`;
-            journalEntries.appendChild(journalEntry);
-            document.getElementById('journal-text').value = '';
+        // Call updateTodoCounter initially and whenever adding/removing todo items
+        updateTodoCounter();
+        document.getElementById('add-todo').addEventListener('click', function() {
+            // ... (your existing todo item adding code) ...
+            updateTodoCounter();
         });
+        // ... (your existing todo item removing code) ...
     </script>
 </body>
 </html>
