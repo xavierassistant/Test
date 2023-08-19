@@ -101,6 +101,52 @@
             margin-top: 10px;
             font-size: 14px;
         }
+
+        /* Notion-like styles */
+        #dashboard-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        #dashboard-content > div {
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        #dashboard-content h3 {
+            margin-bottom: 10px;
+        }
+
+        #dashboard-content ul {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+
+        #dashboard-content li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        #dashboard-content li::before {
+            content: '\2022';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #000;
+        }
+
+        #dashboard-content blockquote {
+            margin-top: 20px;
+            border-left: 4px solid #000;
+            padding-left: 10px;
+            font-style: italic;
+            color: #555;
+        }
     </style>
     <title>Productivity App</title>
 </head>
@@ -124,7 +170,28 @@
             <!-- To-do list counter will be displayed here -->
         </div>
         <div id="dashboard-content">
-            <!-- Saved journal entries and todo items will be displayed here -->
+            <div>
+                <h3>Quotes of the Day</h3>
+                <blockquote>Success is not final, failure is not fatal: It is the courage to continue that counts. - Winston Churchill</blockquote>
+                <blockquote>The only limit to our realization of tomorrow will be our doubts of today. - Franklin D. Roosevelt</blockquote>
+                <blockquote>The future belongs to those who believe in the beauty of their dreams. - Eleanor Roosevelt</blockquote>
+            </div>
+            <div>
+                <h3>To-Do List</h3>
+                <ul id="todo-list">
+                    <!-- Todo items will be dynamically added here -->
+                </ul>
+                <input type="text" id="todo-input" placeholder="Add a new task">
+                <button id="add-todo">Add</button>
+            </div>
+            <div>
+                <h3>Journal Entries</h3>
+                <textarea id="journal-text" placeholder="Write your thoughts here"></textarea>
+                <button id="save-journal">Save</button>
+                <div id="journal-entries">
+                    <!-- Journal entries will be displayed here -->
+                </div>
+            </div>
         </div>
     </section>
     <section id="todo">
@@ -134,6 +201,20 @@
         <!-- ... (your existing Journal section) ... -->
     </section>
     <script>
+        const navLinks = document.querySelectorAll('nav a');
+        const sections = document.querySelectorAll('section');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetSectionId = link.getAttribute('href');
+                sections.forEach(section => {
+                    section.style.display = 'none';
+                });
+                document.querySelector(targetSectionId).style.display = 'block';
+            });
+        });
+
         // ... (your existing JavaScript code) ...
 
         const quotes = [
@@ -164,10 +245,24 @@
         // Call updateTodoCounter initially and whenever adding/removing todo items
         updateTodoCounter();
         document.getElementById('add-todo').addEventListener('click', function() {
-            // ... (your existing todo item adding code) ...
-            updateTodoCounter();
+            const todoInput = document.getElementById('todo-input');
+            const todoList = document.getElementById('todo-list');
+            const newTodo = document.createElement('li');
+            newTodo.innerText = todoInput.value;
+            todoList.appendChild(newTodo);
+            todoInput.value = '';
+            updateTodoCounter(); // Update the counter
         });
-        // ... (your existing todo item removing code) ...
+
+        document.getElementById('save-journal').addEventListener('click', function() {
+            const journalText = document.getElementById('journal-text').value;
+            const journalEntries = document.getElementById('journal-entries');
+            const currentDate = new Date().toLocaleString();
+            const journalEntry = document.createElement('p');
+            journalEntry.innerHTML = `<strong>${currentDate}</strong>: ${journalText}`;
+            journalEntries.appendChild(journalEntry);
+            document.getElementById('journal-text').value = '';
+        });
     </script>
 </body>
 </html>
