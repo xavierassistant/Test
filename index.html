@@ -13,139 +13,184 @@
     }
 
     .container {
-      max-width: 500px;
+      max-width: 600px;
       margin: 0 auto;
       padding: 20px;
+    }
+
+    h1 {
       text-align: center;
     }
 
-    select, button {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
+    .section {
       background-color: #222;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .input-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 8px;
+      background-color: #333;
       color: white;
       border: none;
       border-radius: 3px;
+    }
+
+    .add-btn {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      padding: 8px 15px;
       cursor: pointer;
     }
 
-    .song-list {
-      text-align: left;
-    }
-
-    .song-item {
+    .goal {
+      display: flex;
+      align-items: center;
       margin-bottom: 10px;
     }
 
-    .song-title {
-      font-weight: bold;
-      margin-bottom: 5px;
+    .goal-title {
+      flex: 1;
+      font-size: 18px;
     }
 
-    .platform-list {
-      display: none;
+    .goal-progress {
+      flex: 2;
+      background-color: #333;
+      height: 20px;
+      border-radius: 3px;
+      position: relative;
     }
 
-    .platform-toggle {
-      cursor: pointer;
-      color: #3498db;
+    .goal-bar {
+      height: 100%;
+      border-radius: 3px;
+      background-color: #3498db;
     }
 
-    #results {
-      margin-top: 20px;
+    .dashboard {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .dashboard-item {
+      background-color: #222;
+      padding: 15px;
+      border-radius: 5px;
+      flex: 1;
+      margin: 0 5px;
+      text-align: center;
     }
   </style>
-  <title>Music Mood Selector</title>
+  <title>Productivity App</title>
 </head>
 <body>
   <div class="container">
-    <h1>Music Mood Selector</h1>
-    <p>How are you feeling today?</p>
-    <select id="moodSelector">
-      <option value="">Select a mood</option>
-      <option value="happy">Happy</option>
-      <option value="sad">Sad</option>
-      <option value="calm">Calm</option>
-    </select>
-    <button id="submitBtn">Get Music Recommendations</button>
-    <div id="results" class="song-list"></div>
+    <h1>Productivity App</h1>
+
+    <div class="section">
+      <div class="section-title">To-Do List</div>
+      <div class="input-container">
+        <input type="text" id="todoInput" placeholder="Add a task">
+        <button class="add-btn" onclick="addTodo()">Add</button>
+      </div>
+      <ul id="todoList"></ul>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Goal List</div>
+      <div class="input-container">
+        <input type="text" id="goalInput" placeholder="Add a goal">
+        <button class="add-btn" onclick="addGoal()">Add</button>
+      </div>
+      <div id="goalList"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Dashboard</div>
+      <div class="dashboard">
+        <div class="dashboard-item">
+          <h3>Tasks Completed</h3>
+          <p id="tasksCompleted">0</p>
+        </div>
+        <div class="dashboard-item">
+          <h3>Goals Achieved</h3>
+          <p id="goalsAchieved">0</p>
+        </div>
+      </div>
+    </div>
   </div>
+
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const moodSelector = document.getElementById('moodSelector');
-      const submitBtn = document.getElementById('submitBtn');
-      const resultsDiv = document.getElementById('results');
+    let tasksCompleted = 0;
+    let goalsAchieved = 0;
 
-      submitBtn.addEventListener('click', () => {
-        const selectedMood = moodSelector.value;
+    function addTodo() {
+      const todoInput = document.getElementById('todoInput');
+      const todoList = document.getElementById('todoList');
+      const taskText = todoInput.value.trim();
 
-        if (selectedMood) {
-          const recommendations = getMusicRecommendations(selectedMood);
-          displayResults(recommendations);
-        }
-      });
-
-      function getMusicRecommendations(mood) {
-        const musicRecommendations = {
-          happy: [
-            { title: "Don't Stop Believin'", artist: "Journey", platforms: ["Spotify", "Apple Music"] },
-            { title: "Happy", artist: "Pharrell Williams", platforms: ["Spotify", "YouTube"] },
-            { title: "Can't Stop the Feeling!", artist: "Justin Timberlake", platforms: ["Spotify", "Apple Music"] },
-            { title: "Uptown Funk", artist: "Mark Ronson ft. Bruno Mars", platforms: ["Spotify", "YouTube"] },
-            { title: "I Gotta Feeling", artist: "The Black Eyed Peas", platforms: ["Spotify", "Apple Music"] },
-          ],
-          sad: [
-            { title: "Someone Like You", artist: "Adele", platforms: ["Apple Music", "YouTube"] },
-            { title: "Fix You", artist: "Coldplay", platforms: ["Spotify", "Amazon Music"] },
-            { title: "Hallelujah", artist: "Jeff Buckley", platforms: ["YouTube", "Apple Music"] },
-            { title: "Stay with Me", artist: "Sam Smith", platforms: ["Spotify", "YouTube"] },
-            { title: "Yesterday", artist: "The Beatles", platforms: ["Apple Music", "YouTube"] },
-          ],
-          calm: [
-            { title: "Imagine", artist: "John Lennon", platforms: ["Spotify", "YouTube"] },
-            { title: "The Scientist", artist: "Coldplay", platforms: ["YouTube", "Amazon Music"] },
-            { title: "Let It Be", artist: "The Beatles", platforms: ["Spotify", "Apple Music"] },
-            { title: "Perfect", artist: "Ed Sheeran", platforms: ["Apple Music", "YouTube"] },
-            { title: "What a Wonderful World", artist: "Louis Armstrong", platforms: ["Spotify", "Apple Music"] },
-          ]
-        };
-
-        return musicRecommendations[mood] || [];
+      if (taskText !== '') {
+        const taskItem = document.createElement('li');
+        taskItem.textContent = taskText;
+        todoList.appendChild(taskItem);
+        tasksCompleted++;
+        updateDashboard();
+        todoInput.value = '';
       }
+    }
 
-      function displayResults(recommendations) {
-        if (recommendations.length > 0) {
-          const resultsHTML = recommendations.map(song => createSongItem(song)).join('');
-          resultsDiv.innerHTML = resultsHTML;
-        } else {
-          resultsDiv.innerHTML = '<p>No recommendations available.</p>';
-        }
-      }
+    function addGoal() {
+      const goalInput = document.getElementById('goalInput');
+      const goalList = document.getElementById('goalList');
+      const goalText = goalInput.value.trim();
 
-      function createSongItem(song) {
-        return `
-          <div class="song-item">
-            <div class="song-title">${song.title} - ${song.artist}</div>
-            <div class="platform-toggle" onclick="togglePlatforms(this)">Platforms ▼</div>
-            <ul class="platform-list">
-              ${song.platforms.map(platform => `<li>${platform}</li>`).join('')}
-            </ul>
+      if (goalText !== '') {
+        const goalItem = document.createElement('div');
+        goalItem.classList.add('goal');
+        goalItem.innerHTML = `
+          <div class="goal-title">${goalText}</div>
+          <div class="goal-progress">
+            <div class="goal-bar" style="width: 0;"></div>
           </div>
+          <button class="add-btn" onclick="advanceGoal(this)">Advance</button>
         `;
+        goalList.appendChild(goalItem);
+        goalInput.value = '';
       }
+    }
 
-      function togglePlatforms(element) {
-        const platformList = element.nextElementSibling;
-        if (platformList.style.display === 'none') {
-          platformList.style.display = 'block';
-          element.textContent = 'Platforms ▲';
-        } else {
-          platformList.style.display = 'none';
-          element.textContent = 'Platforms ▼';
-        }
+    function advanceGoal(button) {
+      const goalBar = button.previousElementSibling.querySelector('.goal-bar');
+      const currentWidth = parseFloat(goalBar.style.width);
+      if (currentWidth < 100) {
+        goalBar.style.width = `${currentWidth + 10}%`;
+      } else {
+        button.disabled = true;
+        goalsAchieved++;
+        updateDashboard();
       }
-    });
+    }
+
+    function updateDashboard() {
+      document.getElementById('tasksCompleted').textContent = tasksCompleted;
+      document.getElementById('goalsAchieved').textContent = goalsAchieved;
+    }
   </script>
 </body>
 </html>
