@@ -157,7 +157,7 @@
     <nav>
         <ul>
             <li><a href="#dashboard">Dashboard</a></li>
-            <li><a href="#todo">To-Do List</a></li>
+            <li><a href="#goals">Goals</a></li>
             <li><a href="#journal">Journal</a></li>
         </ul>
     </nav>
@@ -194,8 +194,15 @@
             </div>
         </div>
     </section>
-    <section id="todo">
-        <!-- ... (your existing To-Do section) ... -->
+    <section id="goals">
+        <h2>Goals</h2>
+        <div id="goal-form">
+            <input type="text" id="goal-input" placeholder="Enter a new goal">
+            <button id="add-goal">Add</button>
+        </div>
+        <div id="goal-list">
+            <!-- Goals will be displayed here -->
+        </div>
     </section>
     <section id="journal">
         <!-- ... (your existing Journal section) ... -->
@@ -263,6 +270,8 @@
             journalEntries.appendChild(journalEntry);
             document.getElementById('journal-text').value = '';
         });
+
+        // ... (your existing goal advance functionality) ...
     </script>
 </body>
 </html>
