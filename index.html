@@ -13,7 +13,7 @@
     }
 
     .container {
-      max-width: 400px;
+      max-width: 500px;
       margin: 0 auto;
       padding: 20px;
       text-align: center;
@@ -28,6 +28,28 @@
       border: none;
       border-radius: 3px;
       cursor: pointer;
+    }
+
+    .song-list {
+      text-align: left;
+    }
+
+    .song-item {
+      margin-bottom: 10px;
+    }
+
+    .song-title {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .platform-list {
+      display: none;
+    }
+
+    .platform-toggle {
+      cursor: pointer;
+      color: #3498db;
     }
 
     #results {
@@ -47,7 +69,7 @@
       <option value="calm">Calm</option>
     </select>
     <button id="submitBtn">Get Music Recommendations</button>
-    <div id="results"></div>
+    <div id="results" class="song-list"></div>
   </div>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -67,25 +89,28 @@
       function getMusicRecommendations(mood) {
         const musicRecommendations = {
           happy: [
-            "Don't Stop Believin' - Journey",
-            "Happy - Pharrell Williams",
-            "Can't Stop the Feeling! - Justin Timberlake",
-            "Uptown Funk - Mark Ronson ft. Bruno Mars",
-            "I Gotta Feeling - The Black Eyed Peas"
+            { title: "Don't Stop Believin'", platforms: ["Spotify", "Apple Music"] },
+            { title: "Happy", platforms: ["Spotify", "YouTube"] },
+            { title: "Can't Stop the Feeling!", platforms: ["Spotify", "Apple Music"] },
+            { title: "Uptown Funk", platforms: ["Spotify", "YouTube"] },
+            { title: "I Gotta Feeling", platforms: ["Spotify", "Apple Music"] },
+            // Add more songs here
           ],
           sad: [
-            "Someone Like You - Adele",
-            "Fix You - Coldplay",
-            "Hallelujah - Jeff Buckley",
-            "Stay with Me - Sam Smith",
-            "Yesterday - The Beatles"
+            { title: "Someone Like You", platforms: ["Apple Music", "YouTube"] },
+            { title: "Fix You", platforms: ["Spotify", "Amazon Music"] },
+            { title: "Hallelujah", platforms: ["YouTube", "Apple Music"] },
+            { title: "Stay with Me", platforms: ["Spotify", "YouTube"] },
+            { title: "Yesterday", platforms: ["Apple Music", "YouTube"] },
+            // Add more songs here
           ],
           calm: [
-            "Imagine - John Lennon",
-            "The Scientist - Coldplay",
-            "Let It Be - The Beatles",
-            "Perfect - Ed Sheeran",
-            "What a Wonderful World - Louis Armstrong"
+            { title: "Imagine", platforms: ["Spotify", "YouTube"] },
+            { title: "The Scientist", platforms: ["YouTube", "Amazon Music"] },
+            { title: "Let It Be", platforms: ["Spotify", "Apple Music"] },
+            { title: "Perfect", platforms: ["Apple Music", "YouTube"] },
+            { title: "What a Wonderful World", platforms: ["Spotify", "Apple Music"] },
+            // Add more songs here
           ]
         };
 
@@ -94,10 +119,33 @@
 
       function displayResults(recommendations) {
         if (recommendations.length > 0) {
-          const resultsHTML = recommendations.map(song => `<p>${song}</p>`).join('');
+          const resultsHTML = recommendations.map(song => createSongItem(song)).join('');
           resultsDiv.innerHTML = resultsHTML;
         } else {
           resultsDiv.innerHTML = '<p>No recommendations available.</p>';
+        }
+      }
+
+      function createSongItem(song) {
+        return `
+          <div class="song-item">
+            <div class="song-title">${song.title}</div>
+            <div class="platform-toggle" onclick="togglePlatforms(this)">Platforms ▼</div>
+            <ul class="platform-list">
+              ${song.platforms.map(platform => `<li>${platform}</li>`).join('')}
+            </ul>
+          </div>
+        `;
+      }
+
+      function togglePlatforms(element) {
+        const platformList = element.nextElementSibling;
+        if (platformList.style.display === 'none') {
+          platformList.style.display = 'block';
+          element.textContent = 'Platforms ▲';
+        } else {
+          platformList.style.display = 'none';
+          element.textContent = 'Platforms ▼';
         }
       }
     });
