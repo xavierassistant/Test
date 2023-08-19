@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Music Mood Selector</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -20,21 +19,11 @@
       text-align: center;
     }
 
-    select, textarea {
+    select, button {
       width: 100%;
       padding: 10px;
       margin-bottom: 10px;
       background-color: #222;
-      color: white;
-      border: none;
-      border-radius: 3px;
-    }
-
-    button {
-      display: block;
-      width: 100%;
-      padding: 10px;
-      background-color: #3498db;
       color: white;
       border: none;
       border-radius: 3px;
@@ -45,51 +34,71 @@
       margin-top: 20px;
     }
   </style>
+  <title>Music Mood Selector</title>
 </head>
 <body>
   <div class="container">
     <h1>Music Mood Selector</h1>
     <p>How are you feeling today?</p>
     <select id="moodSelector">
+      <option value="">Select a mood</option>
       <option value="happy">Happy</option>
       <option value="sad">Sad</option>
       <option value="calm">Calm</option>
-      <!-- Add more mood options here -->
     </select>
-    <textarea id="description" placeholder="Briefly describe how you feel..."></textarea>
     <button id="submitBtn">Get Music Recommendations</button>
     <div id="results"></div>
   </div>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const moodSelector = document.getElementById('moodSelector');
-      const description = document.getElementById('description');
       const submitBtn = document.getElementById('submitBtn');
       const resultsDiv = document.getElementById('results');
 
       submitBtn.addEventListener('click', () => {
         const selectedMood = moodSelector.value;
-        const userDescription = description.value;
 
-        if (selectedMood && userDescription) {
-          const result = getMusicRecommendation(selectedMood);
-          displayResults(result);
+        if (selectedMood) {
+          const recommendations = getMusicRecommendations(selectedMood);
+          displayResults(recommendations);
         }
       });
 
-      function getMusicRecommendation(mood) {
-        if (mood === 'happy') {
-          return 'Recommended happy and upbeat songs.';
-        } else if (mood === 'sad') {
-          return 'Recommended soothing and melancholic songs.';
-        } else if (mood === 'calm') {
-          return 'Recommended calming and relaxing songs.';
-        }
-        return 'No recommendations available.';
+      function getMusicRecommendations(mood) {
+        const musicRecommendations = {
+          happy: [
+            "Don't Stop Believin' - Journey",
+            "Happy - Pharrell Williams",
+            "Can't Stop the Feeling! - Justin Timberlake",
+            "Uptown Funk - Mark Ronson ft. Bruno Mars",
+            "I Gotta Feeling - The Black Eyed Peas"
+          ],
+          sad: [
+            "Someone Like You - Adele",
+            "Fix You - Coldplay",
+            "Hallelujah - Jeff Buckley",
+            "Stay with Me - Sam Smith",
+            "Yesterday - The Beatles"
+          ],
+          calm: [
+            "Imagine - John Lennon",
+            "The Scientist - Coldplay",
+            "Let It Be - The Beatles",
+            "Perfect - Ed Sheeran",
+            "What a Wonderful World - Louis Armstrong"
+          ]
+        };
+
+        return musicRecommendations[mood] || [];
       }
 
-      function displayResults(result) {
-        resultsDiv.innerHTML = `<p>${result}</p>`;
+      function displayResults(recommendations) {
+        if (recommendations.length > 0) {
+          const resultsHTML = recommendations.map(song => `<p>${song}</p>`).join('');
+          resultsDiv.innerHTML = resultsHTML;
+        } else {
+          resultsDiv.innerHTML = '<p>No recommendations available.</p>';
+        }
       }
     });
   </script>
