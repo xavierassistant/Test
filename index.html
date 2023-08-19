@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>To-Do List App</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Music Mood Selector</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
+      background-color: black;
+      color: white;
       margin: 0;
       padding: 0;
     }
@@ -14,87 +17,79 @@
       max-width: 400px;
       margin: 0 auto;
       padding: 20px;
-      background-color: #fff;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    h1 {
       text-align: center;
     }
 
-    .task-input {
+    select, textarea {
       width: 100%;
       padding: 10px;
       margin-bottom: 10px;
-      border: 1px solid #ccc;
+      background-color: #222;
+      color: white;
+      border: none;
       border-radius: 3px;
     }
 
-    .add-btn {
+    button {
       display: block;
       width: 100%;
       padding: 10px;
       background-color: #3498db;
-      color: #fff;
+      color: white;
       border: none;
       border-radius: 3px;
       cursor: pointer;
     }
 
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    li {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px;
-      margin-bottom: 5px;
-      background-color: #fff;
-      border: 1px solid #e0e0e0;
-      border-radius: 3px;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    }
-
-    .delete-btn {
-      color: #e74c3c;
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
+    #results {
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>To-Do List</h1>
-    <input type="text" class="task-input" id="task" placeholder="Enter a task...">
-    <button class="add-btn" id="addBtn">Add Task</button>
-    <ul id="taskList"></ul>
+    <h1>Music Mood Selector</h1>
+    <p>How are you feeling today?</p>
+    <select id="moodSelector">
+      <option value="happy">Happy</option>
+      <option value="sad">Sad</option>
+      <option value="calm">Calm</option>
+      <!-- Add more mood options here -->
+    </select>
+    <textarea id="description" placeholder="Briefly describe how you feel..."></textarea>
+    <button id="submitBtn">Get Music Recommendations</button>
+    <div id="results"></div>
   </div>
-
   <script>
-    const taskInput = document.getElementById('task');
-    const addBtn = document.getElementById('addBtn');
-    const taskList = document.getElementById('taskList');
+    document.addEventListener('DOMContentLoaded', () => {
+      const moodSelector = document.getElementById('moodSelector');
+      const description = document.getElementById('description');
+      const submitBtn = document.getElementById('submitBtn');
+      const resultsDiv = document.getElementById('results');
 
-    addBtn.addEventListener('click', () => {
-      const taskText = taskInput.value;
-      if (taskText) {
-        const li = document.createElement('li');
-        li.innerHTML = `
-          <span>${taskText}</span>
-          <button class="delete-btn">Delete</button>
-        `;
-        taskList.appendChild(li);
-        taskInput.value = '';
+      submitBtn.addEventListener('click', () => {
+        const selectedMood = moodSelector.value;
+        const userDescription = description.value;
 
-        const deleteBtn = li.querySelector('.delete-btn');
-        deleteBtn.addEventListener('click', () => {
-          taskList.removeChild(li);
-        });
+        if (selectedMood && userDescription) {
+          const result = getMusicRecommendation(selectedMood);
+          displayResults(result);
+        }
+      });
+
+      function getMusicRecommendation(mood) {
+        if (mood === 'happy') {
+          return 'Recommended happy and upbeat songs.';
+        } else if (mood === 'sad') {
+          return 'Recommended soothing and melancholic songs.';
+        } else if (mood === 'calm') {
+          return 'Recommended calming and relaxing songs.';
+        }
+        return 'No recommendations available.';
+      }
+
+      function displayResults(result) {
+        resultsDiv.innerHTML = `<p>${result}</p>`;
       }
     });
   </script>
