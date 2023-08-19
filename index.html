@@ -54,6 +54,16 @@
         button:hover {
             background-color: #555;
         }
+        
+        #dashboard-content {
+            margin-top: 20px;
+        }
+        
+        #dashboard-content p {
+            margin: 10px 0;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
     </style>
     <title>Productivity App</title>
 </head>
@@ -63,10 +73,17 @@
     </header>
     <nav>
         <ul>
+            <li><a href="#dashboard">Dashboard</a></li>
             <li><a href="#todo">To-Do List</a></li>
             <li><a href="#journal">Journal</a></li>
         </ul>
     </nav>
+    <section id="dashboard">
+        <h2>Dashboard</h2>
+        <div id="dashboard-content">
+            <!-- Saved journal entries and todo items will be displayed here -->
+        </div>
+    </section>
     <section id="todo">
         <h2>To-Do List</h2>
         <ul id="todo-list">
@@ -89,10 +106,15 @@
             todoList.appendChild(newTodo);
             todoInput.value = '';
         });
-        
+
         document.getElementById('save-journal').addEventListener('click', function() {
             const journalText = document.getElementById('journal-text').value;
-            // Implement saving logic here
+            const dashboardContent = document.getElementById('dashboard-content');
+            const currentDate = new Date().toLocaleString();
+            const journalEntry = document.createElement('div');
+            journalEntry.innerHTML = `<p><strong>${currentDate}</strong>: ${journalText}</p>`;
+            dashboardContent.appendChild(journalEntry);
+            document.getElementById('journal-text').value = '';
         });
     </script>
 </body>
