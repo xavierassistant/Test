@@ -66,6 +66,7 @@
 
     .section.active {
       display: block; /* Show active section */
+      text-align: center; /* Center content */
     }
 
     .section-title {
@@ -125,6 +126,7 @@
     .dashboard {
       display: none;
       flex-direction: column;
+      text-align: center;
     }
 
     .dashboard-item {
@@ -147,6 +149,9 @@
       border: none;
       border-radius: 3px;
       margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .collapsible:hover {
@@ -167,7 +172,7 @@
 <body>
   <div class="container">
     <div class="sidebar">
-      <button class="collapsible" onclick="toggleSidebar()">Toggle Sidebar</button>
+      <button class="collapsible" onclick="toggleSidebar()">&#9776;</button>
       <div class="content" id="navContent">
         <div class="nav">
           <button class="nav-btn" onclick="showDashboard()">Dashboard</button>
