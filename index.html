@@ -89,28 +89,25 @@
       function getMusicRecommendations(mood) {
         const musicRecommendations = {
           happy: [
-            { title: "Don't Stop Believin'", platforms: ["Spotify", "Apple Music"] },
-            { title: "Happy", platforms: ["Spotify", "YouTube"] },
-            { title: "Can't Stop the Feeling!", platforms: ["Spotify", "Apple Music"] },
-            { title: "Uptown Funk", platforms: ["Spotify", "YouTube"] },
-            { title: "I Gotta Feeling", platforms: ["Spotify", "Apple Music"] },
-            // Add more songs here
+            { title: "Don't Stop Believin'", artist: "Journey", platforms: ["Spotify", "Apple Music"] },
+            { title: "Happy", artist: "Pharrell Williams", platforms: ["Spotify", "YouTube"] },
+            { title: "Can't Stop the Feeling!", artist: "Justin Timberlake", platforms: ["Spotify", "Apple Music"] },
+            { title: "Uptown Funk", artist: "Mark Ronson ft. Bruno Mars", platforms: ["Spotify", "YouTube"] },
+            { title: "I Gotta Feeling", artist: "The Black Eyed Peas", platforms: ["Spotify", "Apple Music"] },
           ],
           sad: [
-            { title: "Someone Like You", platforms: ["Apple Music", "YouTube"] },
-            { title: "Fix You", platforms: ["Spotify", "Amazon Music"] },
-            { title: "Hallelujah", platforms: ["YouTube", "Apple Music"] },
-            { title: "Stay with Me", platforms: ["Spotify", "YouTube"] },
-            { title: "Yesterday", platforms: ["Apple Music", "YouTube"] },
-            // Add more songs here
+            { title: "Someone Like You", artist: "Adele", platforms: ["Apple Music", "YouTube"] },
+            { title: "Fix You", artist: "Coldplay", platforms: ["Spotify", "Amazon Music"] },
+            { title: "Hallelujah", artist: "Jeff Buckley", platforms: ["YouTube", "Apple Music"] },
+            { title: "Stay with Me", artist: "Sam Smith", platforms: ["Spotify", "YouTube"] },
+            { title: "Yesterday", artist: "The Beatles", platforms: ["Apple Music", "YouTube"] },
           ],
           calm: [
-            { title: "Imagine", platforms: ["Spotify", "YouTube"] },
-            { title: "The Scientist", platforms: ["YouTube", "Amazon Music"] },
-            { title: "Let It Be", platforms: ["Spotify", "Apple Music"] },
-            { title: "Perfect", platforms: ["Apple Music", "YouTube"] },
-            { title: "What a Wonderful World", platforms: ["Spotify", "Apple Music"] },
-            // Add more songs here
+            { title: "Imagine", artist: "John Lennon", platforms: ["Spotify", "YouTube"] },
+            { title: "The Scientist", artist: "Coldplay", platforms: ["YouTube", "Amazon Music"] },
+            { title: "Let It Be", artist: "The Beatles", platforms: ["Spotify", "Apple Music"] },
+            { title: "Perfect", artist: "Ed Sheeran", platforms: ["Apple Music", "YouTube"] },
+            { title: "What a Wonderful World", artist: "Louis Armstrong", platforms: ["Spotify", "Apple Music"] },
           ]
         };
 
@@ -129,7 +126,7 @@
       function createSongItem(song) {
         return `
           <div class="song-item">
-            <div class="song-title">${song.title}</div>
+            <div class="song-title">${song.title} - ${song.artist}</div>
             <div class="platform-toggle" onclick="togglePlatforms(this)">Platforms ▼</div>
             <ul class="platform-list">
               ${song.platforms.map(platform => `<li>${platform}</li>`).join('')}
