@@ -271,7 +271,37 @@
             document.getElementById('journal-text').value = '';
         });
 
-        // ... (your existing goal advance functionality) ...
+        <!-- ... (your existing JavaScript code) ... -->
+
+// Goal functionality
+document.getElementById('add-goal').addEventListener('click', function() {
+    const goalInput = document.getElementById('goal-input');
+    const goalList = document.getElementById('goal-list');
+    const newGoal = document.createElement('div');
+    newGoal.classList.add('goal-item');
+    newGoal.innerHTML = `
+        <input type="checkbox" class="goal-checkbox">
+        <span>${goalInput.value}</span>
+        <button class="advance-button">Advance</button>
+    `;
+    goalList.appendChild(newGoal);
+    goalInput.value = '';
+});
+
+document.addEventListener('click', function(event) {
+    if (event.target && event.target.classList.contains('advance-button')) {
+        const goalItem = event.target.closest('.goal-item');
+        if (goalItem) {
+            const goalCheckbox = goalItem.querySelector('.goal-checkbox');
+            if (goalCheckbox) {
+                goalCheckbox.checked = !goalCheckbox.checked;
+            }
+        }
+    }
+});
+
+// ... (your existing goal advance functionality) ...
+
     </script>
 </body>
 </html>
