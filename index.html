@@ -32,25 +32,6 @@
       align-items: center;
     }
 
-    .nav {
-      margin-bottom: 20px;
-    }
-
-    .nav-btn {
-      background-color: #333;
-      color: white;
-      border: none;
-      border-radius: 3px;
-      padding: 8px 15px;
-      cursor: pointer;
-      width: 100%;
-      text-align: left;
-    }
-
-    .nav-btn:hover {
-      background-color: #555;
-    }
-
     .main-content {
       flex: 1;
       margin-left: 20px;
@@ -61,111 +42,19 @@
       padding: 15px;
       border-radius: 5px;
       margin-bottom: 20px;
-      display: none; /* Hide sections by default */
     }
 
-    .section.active {
-      display: block; /* Show active section */
-      text-align: center; /* Center content */
-    }
-
-    .section-title {
-      font-size: 20px;
-      margin-bottom: 10px;
-    }
-
-    .input-container {
-      display: flex;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    input[type="text"] {
-      flex: 1;
-      padding: 8px;
-      background-color: #333;
-      color: white;
+    /* Remove grey border from the collapsible sidebar */
+    .sidebar .collapsible {
       border: none;
-      border-radius: 3px;
     }
 
-    .add-btn {
-      background-color: #3498db;
-      color: white;
-      border: none;
-      border-radius: 3px;
-      padding: 8px 15px;
-      cursor: pointer;
-    }
-
-    .goal {
-      display: flex;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .goal-title {
-      flex: 1;
-      font-size: 18px;
-    }
-
-    .goal-progress {
-      flex: 2;
-      background-color: #333;
-      height: 20px;
-      border-radius: 3px;
-      position: relative;
-    }
-
-    .goal-bar {
-      height: 100%;
-      border-radius: 3px;
-      background-color: #3498db;
-    }
-
-    .dashboard {
-      display: none;
-      flex-direction: column;
-      text-align: center;
-    }
-
-    .dashboard-item {
+    /* Additional calendar styles */
+    #calendar {
       background-color: #222;
-      padding: 15px;
       border-radius: 5px;
-      flex: 1;
-      margin: 0 5px;
-      text-align: center;
-      margin-bottom: 10px;
+      padding: 10px;
     }
-
-    /* Collapsible Sidebar */
-    .collapsible {
-      width: 100%;
-      text-align: left;
-      cursor: pointer;
-      padding: 8px 15px;
-      background-color: #333;
-      border: none;
-      border-radius: 3px;
-      margin-bottom: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .collapsible:hover {
-      background-color: #555;
-    }
-
-    .content {
-      display: none;
-    }
-
-    .content.active {
-      display: block;
-    }
-
   </style>
   <title>Productivity App</title>
 </head>
@@ -215,7 +104,32 @@
     </div>
   </div>
 
+  <div id="calendar"></div>
+
+  <!-- Include the FullCalendar library -->
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.js"></script>
   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        // Configure your calendar options here
+        initialView: 'dayGridMonth',
+        events: [
+          // You can add your events here
+          // { title: 'Event 1', start: '2023-08-20' },
+          // { title: 'Event 2', start: '2023-08-22' }
+        ],
+        selectable: true,
+        dateClick: function(info) {
+          // Handle date click here
+          alert('Date clicked: ' + info.dateStr);
+        }
+      });
+
+      calendar.render();
+    });
+
     let tasksCompleted = 0;
     let goalsAchieved = 0;
 
