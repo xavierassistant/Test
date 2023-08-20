@@ -38,6 +38,7 @@
       width: 30%;
       margin-left: 1rem;
       background-color: white;
+      color: black; /* Adjust text color for note list */
     }
     
     textarea {
@@ -46,6 +47,8 @@
       border: 1px solid #ccc;
       padding: 0.5rem;
       font-size: 14px;
+      color: black; /* Adjust text color for textarea */
+      background-color: white; /* Set background color for textarea */
     }
     
     button {
@@ -129,6 +132,18 @@
     /* Adjust text color in dark mode */
     .dark-mode * {
       color: white;
+    }
+    
+    /* Keep text black in specific areas */
+    .dark-mode .note-container,
+    .dark-mode textarea,
+    .dark-mode .note-list {
+      color: black;
+    }
+    
+    /* Set background color for note list */
+    .dark-mode .note-list {
+      background-color: white;
     }
   </style>
   <title>Notion-like Web App</title>
