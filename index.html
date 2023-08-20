@@ -76,6 +76,55 @@
       margin-left: 10px;
       cursor: pointer;
     }
+
+    /* Switch styles */
+    .toggle-input {
+      display: none;
+    }
+    
+    .toggle-label {
+      display: inline-block;
+      width: 40px;
+      height: 20px;
+      background-color: #ccc;
+      border-radius: 20px;
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .toggle-inner {
+      display: block;
+      width: 16px;
+      height: 16px;
+      background-color: white;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: left 0.3s ease-in-out;
+    }
+    
+    .toggle-switch {
+      display: block;
+      width: 18px;
+      height: 18px;
+      background-color: #fff;
+      border-radius: 50%;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      transition: left 0.3s ease-in-out;
+    }
+    
+    .toggle-input:checked + .toggle-label .toggle-inner {
+      left: 20px;
+    }
+    
+    .toggle-input:checked + .toggle-label .toggle-switch {
+      left: 20px;
+      background-color: #333;
+    }
   </style>
   <title>Notion-like Web App</title>
 </head>
@@ -83,10 +132,10 @@
   <header>
     <h1>My Notion-like App</h1>
     <div class="dark-mode-toggle">
-      <input type="checkbox" id="dark-mode-toggle" />
-      <label for="dark-mode-toggle">
-        <i class="fas fa-sun"></i>
-        <i class="fas fa-moon"></i>
+      <input type="checkbox" id="dark-mode-toggle" class="toggle-input">
+      <label for="dark-mode-toggle" class="toggle-label">
+        <span class="toggle-inner"></span>
+        <span class="toggle-switch"></span>
       </label>
     </div>
   </header>
