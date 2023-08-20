@@ -164,6 +164,56 @@
     .show-notification {
       opacity: 1;
     }
+
+    /* Navigation bar styles */
+    .nav-bar {
+      position: fixed;
+      top: 0;
+      left: -260px;
+      width: 250px;
+      height: 100vh;
+      background-color: #222;
+      color: white;
+      transition: left 0.3s;
+      z-index: 1000;
+    }
+    
+    .nav-bar.show-nav {
+      left: 0;
+    }
+    
+    .nav-header {
+      background-color: #333;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    
+    .nav-toggle {
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+    }
+    
+    .nav-list {
+      list-style: none;
+      padding: 0;
+      margin: 2rem 0;
+    }
+    
+    .nav-item {
+      padding: 0.5rem 1rem;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    .nav-item:hover {
+      background-color: #444;
+    }
   </style>
   <title>Notion-like Web App</title>
 </head>
@@ -177,7 +227,16 @@
         <span class="toggle-switch"></span>
       </label>
     </div>
+    <div class="nav-toggle" id="nav-toggle"><i class="fas fa-bars"></i></div>
   </header>
+  <nav class="nav-bar" id="nav-bar">
+    <div class="nav-header">
+      <h2>Navigation</h2>
+    </div>
+    <ul class="nav-list">
+      <li class="nav-item" id="dark-mode-nav">Toggle Dark Mode</li>
+    </ul>
+  </nav>
   <main>
     <div class="note-container">
       <textarea id="note-content" placeholder="Write your notes here..."></textarea>
@@ -195,7 +254,10 @@
     const body = document.body;
     const notes = [];
     const notification = document.getElementById('notification');
-
+    const navToggle = document.getElementById('nav-toggle');
+    const navBar = document.getElementById('nav-bar');
+    const darkModeNav = document.getElementById('dark-mode-nav');
+    
     function showNotification() {
       notification.classList.add('show-notification');
       setTimeout(() => {
@@ -216,6 +278,15 @@
 
     darkModeToggle.addEventListener('change', () => {
       body.classList.toggle('dark-mode', darkModeToggle.checked);
+    });
+
+    darkModeNav.addEventListener('click', () => {
+      darkModeToggle.checked = !darkModeToggle.checked;
+      body.classList.toggle('dark-mode', darkModeToggle.checked);
+    });
+
+    navToggle.addEventListener('click', () => {
+      navBar.classList.toggle('show-nav');
     });
 
     function saveNote(content) {
