@@ -1,4 +1,154 @@
- position: fixed;
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Add transition effect */
+    }
+    
+    header {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+    
+    main {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 80vh;
+    }
+    
+    .note-container {
+      border: 1px solid #ddd;
+      padding: 1rem;
+      width: 60%;
+      background-color: white;
+      color: black;
+      margin-bottom: 1rem;
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Add transition effect */
+    }
+    
+    textarea {
+      width: 100%;
+      height: 200px;
+      border: 1px solid #ccc;
+      padding: 0.5rem;
+      font-size: 14px;
+      background-color: white;
+      color: black; /* Set text color for textarea */
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Add transition effect */
+    }
+    
+    button {
+      margin-top: 0.5rem;
+      padding: 0.5rem 1rem;
+      background-color: #333;
+      color: white;
+      border: 1px solid #333; /* Set border color for light mode */
+      cursor: pointer;
+      transition: background-color 0.3s, border-color 0.3s; /* Add transition effect */
+    }
+    
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 1rem;
+    }
+    
+    .dark-mode {
+      background-color: #222;
+      color: white;
+    }
+    
+    .dark-mode-toggle {
+      display: flex;
+      align-items: center;
+    }
+    
+    .dark-mode-toggle label {
+      margin-left: 10px;
+      cursor: pointer;
+    }
+
+    /* Switch styles */
+    .toggle-input {
+      display: none;
+    }
+    
+    .toggle-label {
+      display: inline-block;
+      width: 40px;
+      height: 20px;
+      background-color: #ccc;
+      border-radius: 20px;
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .toggle-inner {
+      display: block;
+      width: 16px;
+      height: 16px;
+      background-color: white;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: left 0.3s ease-in-out;
+    }
+    
+    .toggle-switch {
+      display: block;
+      width: 18px;
+      height: 18px;
+      background-color: #fff;
+      border-radius: 50%;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      transition: left 0.3s ease-in-out;
+    }
+    
+    .toggle-input:checked + .toggle-label .toggle-inner {
+      left: 20px;
+    }
+    
+    .toggle-input:checked + .toggle-label .toggle-switch {
+      left: 20px;
+      background-color: #333;
+    }
+
+    /* Adjust text color in dark mode */
+    .dark-mode * {
+      color: white;
+    }
+    
+    /* Change background and text color for all elements in dark mode */
+    .dark-mode .note-container,
+    .dark-mode textarea,
+    .dark-mode button,
+    .dark-mode ul {
+      background-color: #222;
+      color: white;
+    }
+
+    /* Change border color for button in dark mode */
+    .dark-mode button {
+      border-color: #eee; /* Soft light white border in dark mode */
+    }
+    
+    /* Pop-up notification styles */
+    .notification {
+      position: fixed;
       bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
@@ -48,20 +198,16 @@
       left: 1rem;
     }
     
-    .nav-list {
-      list-style: none;
-      padding: 0;
-      margin: 2rem 0;
-    }
-    
-    .nav-item {
+    .nav-link {
+      display: block;
       padding: 0.5rem 1rem;
       font-size: 18px;
-      cursor: pointer;
+      color: white;
+      text-decoration: none;
       transition: background-color 0.3s;
     }
     
-    .nav-item:hover {
+    .nav-link:hover {
       background-color: #444;
     }
   </style>
@@ -84,6 +230,9 @@
       <h2>Navigation</h2>
     </div>
     <ul class="nav-list">
+      <li class="nav-item">
+        <a href="#" class="nav-link"><i class="fas fa-home"></i> Notes Page</a>
+      </li>
       <li class="nav-item" id="dark-mode-nav">
         <label class="switch-label">
           <i class="fas fa-adjust"></i> Toggle Dark Mode
@@ -103,6 +252,8 @@
   </main>
   <div class="notification" id="notification">Note saved!</div>
   <script>
+    /* ... Existing script ... */
+    
     const saveButton = document.getElementById('save-button');
     const noteContent = document.getElementById('note-content');
     const noteList = document.getElementById('note-list');
