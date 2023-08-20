@@ -26,7 +26,7 @@
       height: 80vh;
     }
     
-    /* Adjusted styles to accommodate long notes */
+    /* Adjusted styles for note boxes */
     .note-container {
       border: 1px solid #ddd;
       padding: 1rem;
@@ -34,6 +34,16 @@
       background-color: white;
       color: black;
       margin-bottom: 1rem;
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+      overflow: hidden;
+      word-wrap: break-word;
+    }
+    
+    .note-box {
+      border: 1px solid #ccc;
+      padding: 1rem;
+      margin: 0.5rem 0;
+      background-color: white;
       transition: background-color 0.3s, color 0.3s, border-color 0.3s;
       overflow: hidden;
       word-wrap: break-word;
@@ -252,7 +262,7 @@
       <textarea id="note-content" placeholder="Write your notes here..."></textarea>
       <button id="save-button">Save</button>
       <h2>Saved Notes</h2>
-      <ul id="note-list"></ul>
+      <div id="note-list"></div>
     </div>
   </main>
   <div class="notification" id="notification">Note saved!</div>
@@ -313,9 +323,10 @@
     function updateNoteList() {
       noteList.innerHTML = '';
       notes.forEach((note, index) => {
-        const li = document.createElement('li');
-        li.textContent = `Note ${index + 1}: ${note}`;
-        noteList.appendChild(li);
+        const div = document.createElement('div');
+        div.classList.add('note-box');
+        div.textContent = `Note ${index + 1}: ${note}`;
+        noteList.appendChild(div);
       });
     }
   </script>
