@@ -74,10 +74,24 @@
             color: white;
         }
 
-        .translation {
-            font-size: 20px;
-            font-weight: bold;
+        .word-list {
+            list-style: none;
+            padding: 0;
             margin: 0;
+        }
+
+        .word-list li {
+            margin: 5px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .word-list li.flipped {
+            background-color: #ffc80a;
+            color: white;
         }
     </style>
     <title>Language Learning App</title>
@@ -91,14 +105,14 @@
                 <button class="language-btn">English to Spanish</button>
             </div>
             <div class="card-back">
-                <p class="translation"></p>
+                <ul class="word-list"></ul>
             </div>
         </div>
     </div>
     <script>
         const languageButtons = document.querySelectorAll('.language-btn');
         const cardBack = document.querySelector('.card-back');
-        const translationText = document.querySelector('.translation');
+        const wordList = document.querySelector('.word-list');
 
         const translations = {
             'English to French': {
@@ -120,9 +134,26 @@
         languageButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const selectedPair = button.textContent;
-                const word = Object.keys(translations[selectedPair])[0];
-                const translation = translations[selectedPair][word];
-                translationText.textContent = `${word} (${translation})`;
+                const wordTranslations = translations[selectedPair];
+                const words = Object.keys(wordTranslations);
+
+                // Clear the previous word list
+                wordList.innerHTML = '';
+
+                // Create list items for each word
+                words.forEach(word => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = word;
+                    listItem.addEventListener('click', () => {
+                        const translation = wordTranslations[word];
+                        listItem.textContent = `${word} (${translation})`;
+                        listItem.classList.add('flipped');
+                    });
+                    wordList.appendChild(listItem);
+                });
+
+                // Show the back of the card
+                cardBack.style.transform = 'rotateY(180deg)';
             });
         });
     </script>
