@@ -234,7 +234,13 @@
       <h2>Navigation</h2>
     </div>
     <ul class="nav-list">
-      <li class="nav-item" id="dark-mode-nav">Toggle Dark Mode</li>
+      <li class="nav-item" id="dark-mode-nav">
+        <label class="switch-label">
+          Toggle Dark Mode
+          <input type="checkbox" id="dark-mode-switch" class="toggle-input">
+          <span class="toggle-switch"></span>
+        </label>
+      </li>
     </ul>
   </nav>
   <main>
@@ -251,6 +257,7 @@
     const noteContent = document.getElementById('note-content');
     const noteList = document.getElementById('note-list');
     const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const darkModeSwitch = document.getElementById('dark-mode-switch');
     const body = document.body;
     const notes = [];
     const notification = document.getElementById('notification');
@@ -280,13 +287,19 @@
       body.classList.toggle('dark-mode', darkModeToggle.checked);
     });
 
-    darkModeNav.addEventListener('click', () => {
-      darkModeToggle.checked = !darkModeToggle.checked;
+    darkModeSwitch.addEventListener('change', () => {
+      darkModeToggle.checked = darkModeSwitch.checked;
       body.classList.toggle('dark-mode', darkModeToggle.checked);
     });
 
     navToggle.addEventListener('click', () => {
       navBar.classList.toggle('show-nav');
+    });
+
+    body.addEventListener('click', (event) => {
+      if (!event.target.closest('.nav-bar') && !event.target.closest('.nav-toggle')) {
+        navBar.classList.remove('show-nav');
+      }
     });
 
     function saveNote(content) {
