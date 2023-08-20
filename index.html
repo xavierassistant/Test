@@ -145,6 +145,25 @@
     .dark-mode button {
       border-color: #eee; /* Soft light white border in dark mode */
     }
+    
+    /* Pop-up notification styles */
+    .notification {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 14px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .show-notification {
+      opacity: 1;
+    }
   </style>
   <title>Notion-like Web App</title>
 </head>
@@ -167,6 +186,7 @@
       <ul id="note-list"></ul>
     </div>
   </main>
+  <div class="notification" id="notification">Note saved!</div>
   <script>
     const saveButton = document.getElementById('save-button');
     const noteContent = document.getElementById('note-content');
@@ -174,13 +194,21 @@
     const darkModeToggle = document.getElementById('dark-mode-toggle');
     const body = document.body;
     const notes = [];
+    const notification = document.getElementById('notification');
+
+    function showNotification() {
+      notification.classList.add('show-notification');
+      setTimeout(() => {
+        notification.classList.remove('show-notification');
+      }, 2000); // Display for 2 seconds
+    }
 
     saveButton.addEventListener('click', () => {
       const content = noteContent.value;
       if (content.trim() !== '') {
         saveNote(content);
         updateNoteList();
-        alert('Note saved!');
+        showNotification();
       } else {
         alert('Please enter some content.');
       }
