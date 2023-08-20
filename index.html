@@ -26,6 +26,7 @@
       height: 80vh;
     }
     
+    /* Adjusted styles to accommodate long notes */
     .note-container {
       border: 1px solid #ddd;
       padding: 1rem;
@@ -34,6 +35,8 @@
       color: black;
       margin-bottom: 1rem;
       transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+      overflow: hidden;
+      word-wrap: break-word;
     }
     
     textarea {
@@ -61,6 +64,8 @@
       list-style: none;
       padding: 0;
       margin-top: 1rem;
+      max-height: 250px; /* Adjust as needed */
+      overflow-y: auto;
     }
     
     .dark-mode {
@@ -209,12 +214,6 @@
     .nav-item:hover {
       background-color: #333;
       color: white;
-    }
-
-    /* Limit height and enable vertical scrolling for each saved note */
-    .note-list li {
-      max-height: 100px; /* Adjust as needed */
-      overflow-y: auto;
     }
   </style>
   <title>Notion-like Web App</title>
