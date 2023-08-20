@@ -6,43 +6,78 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+
+        .home-container {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
-            background-color: white;
         }
 
-        .cards-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .card {
-            width: 100px;
-            height: 150px;
-            margin: 10px;
+        .language-button {
             background-color: #0074D9;
             color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        .flashcard-tiles {
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+        }
+
+        .flashcard-tile {
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            font-size: 14px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .flashcard-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .flashcard {
+            width: 300px;
+            height: 200px;
+            background-color: white;
+            border-radius: 10px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            border-radius: 10px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
-        .card.flip {
-            background-color: white;
-            color: #333;
+        .flashcard.flip {
             transform: rotateY(180deg);
         }
 
-        .back-button {
+        .back-arrow {
             position: absolute;
             top: 10px;
             left: 10px;
@@ -51,46 +86,46 @@
             border: none;
             border-radius: 5px;
             padding: 5px 10px;
+            font-size: 14px;
             cursor: pointer;
-        }
-
-        .back-button:hover {
-            background-color: #0056a6;
         }
     </style>
     <title>Language Learning App</title>
 </head>
 <body>
-    <div class="cards-container">
-        <div class="card" data-translation="pomme">apple</div>
-        <div class="card" data-translation="banane">banana</div>
-        <div class="card" data-translation="chat">cat</div>
-        <div class="card" data-translation="chien">dog</div>
-        <div class="card" data-translation="bonjour">hello</div>
+    <div class="home-container">
+        <button class="language-button" onclick="openFlashcardPage('English to French')">English to French</button>
+        <button class="language-button" onclick="openFlashcardPage('English to Spanish')">English to Spanish</button>
     </div>
-    <button class="back-button">Back</button>
+
+    <div class="flashcard-modal">
+        <div class="flashcard" id="flashcard">
+            <div class="back-arrow" onclick="closeFlashcardPage()">← Back</div>
+            <div class="flashcard-content">
+                <div class="flashcard-front">English</div>
+                <div class="flashcard-back">Translation</div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        const cards = document.querySelectorAll('.card');
-        const backButton = document.querySelector('.back-button');
+        const flashcardModal = document.querySelector('.flashcard-modal');
+        const flashcard = document.querySelector('.flashcard');
+        const flashcardFront = document.querySelector('.flashcard-front');
+        const flashcardBack = document.querySelector('.flashcard-back');
 
-        cards.forEach(card => {
-            card.addEventListener('click', () => {
-                card.classList.add('flip');
-            });
-        });
+        const openFlashcardPage = (languagePair) => {
+            flashcardModal.style.display = 'flex';
+            flashcardFront.textContent = 'English';
+            flashcardBack.textContent = 'Translation';
+        };
 
-        backButton.addEventListener('click', () => {
-            cards.forEach(card => {
-                card.classList.remove('flip');
-            });
-        });
+        const closeFlashcardPage = () => {
+            flashcardModal.style.display = 'none';
+        };
 
-        cards.forEach(card => {
-            card.addEventListener('click', () => {
-                const translation = card.getAttribute('data-translation');
-                card.textContent = translation;
-                card.classList.add('flip');
-            });
+        flashcard.addEventListener('click', () => {
+            flashcard.classList.toggle('flip');
         });
     </script>
 </body>
