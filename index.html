@@ -26,7 +26,6 @@
       height: 80vh;
     }
     
-    /* Adjusted styles for note boxes */
     .note-container {
       border: 1px solid #ddd;
       padding: 1rem;
@@ -37,28 +36,6 @@
       transition: background-color 0.3s, color 0.3s, border-color 0.3s;
       overflow: hidden;
       word-wrap: break-word;
-    }
-    
-    .note-box {
-      border: 1px solid #ccc;
-      padding: 1rem;
-      margin: 0.5rem 0;
-      background-color: white;
-      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-      overflow: hidden;
-      word-wrap: break-word;
-    }
-    
-    /* Additional styles for note boxes in dark mode */
-    .dark-mode .note-box {
-      background-color: #333;
-      color: white;
-      border-color: #555;
-    }
-
-    /* Additional styles for note content in dark mode */
-    .dark-mode .note-box p {
-      color: white;
     }
     
     textarea {
@@ -86,7 +63,7 @@
       list-style: none;
       padding: 0;
       margin-top: 1rem;
-      max-height: 250px; /* Adjust as needed */
+      max-height: 250px;
       overflow-y: auto;
     }
     
@@ -158,7 +135,6 @@
     }
     
     .dark-mode .note-container,
-    .dark-mode .note-box,
     .dark-mode textarea,
     .dark-mode button,
     .dark-mode ul {
@@ -187,57 +163,6 @@
     .show-notification {
       opacity: 1;
     }
-
-    .nav-bar {
-      position: fixed;
-      top: 0;
-      left: -260px;
-      width: 250px;
-      height: 100vh;
-      background-color: #222;
-      color: white;
-      transition: left 0.3s;
-      z-index: 1000;
-    }
-    
-    .nav-bar.show-nav {
-      left: 0;
-    }
-    
-    .nav-header {
-      background-color: #333;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-    }
-    
-    .nav-toggle {
-      color: white;
-      font-size: 24px;
-      cursor: pointer;
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
-    }
-
-    .nav-list {
-      list-style: none;
-      padding: 0;
-      margin: 2rem 0;
-    }
-    
-    .nav-item {
-      padding: 1rem;
-      font-size: 18px;
-      cursor: pointer;
-      transition: background-color 0.3s, color 0.3s;
-      text-align: center;
-    }
-    
-    .nav-item:hover {
-      background-color: #333;
-      color: white;
-    }
   </style>
   <title>Notion-like Web App</title>
 </head>
@@ -251,25 +176,7 @@
         <span class="toggle-switch"></span>
       </label>
     </div>
-    <div class="nav-toggle" id="nav-toggle"><i class="fas fa-bars"></i></div>
   </header>
-  <nav class="nav-bar" id="nav-bar">
-    <div class="nav-header">
-      <h2>Navigation</h2>
-    </div>
-    <ul class="nav-list">
-      <li class="nav-item">
-        <a href="#" class="nav-link"><i class="fas fa-home"></i> Notes Page</a>
-      </li>
-      <li class="nav-item" id="dark-mode-nav">
-        <label class="switch-label">
-          <i class="fas fa-adjust"></i> Toggle Dark Mode
-          <input type="checkbox" id="dark-mode-switch" class="toggle-input">
-          <span class="toggle-switch"></span>
-        </label>
-      </li>
-    </ul>
-  </nav>
   <main>
     <div class="note-container">
       <textarea id="note-content" placeholder="Write your notes here..."></textarea>
@@ -284,13 +191,9 @@
     const noteContent = document.getElementById('note-content');
     const noteList = document.getElementById('note-list');
     const darkModeToggle = document.getElementById('dark-mode-toggle');
-    const darkModeSwitch = document.getElementById('dark-mode-switch');
     const body = document.body;
     const notes = [];
     const notification = document.getElementById('notification');
-    const navToggle = document.getElementById('nav-toggle');
-    const navBar = document.getElementById('nav-bar');
-    const darkModeNav = document.getElementById('dark-mode-nav');
     
     function showNotification() {
       notification.classList.add('show-notification');
@@ -314,21 +217,6 @@
       body.classList.toggle('dark-mode', darkModeToggle.checked);
     });
 
-    darkModeSwitch.addEventListener('change', () => {
-      darkModeToggle.checked = darkModeSwitch.checked;
-      body.classList.toggle('dark-mode', darkModeToggle.checked);
-    });
-
-    navToggle.addEventListener('click', () => {
-      navBar.classList.toggle('show-nav');
-    });
-
-    body.addEventListener('click', (event) => {
-      if (!event.target.closest('.nav-bar') && !event.target.closest('.nav-toggle')) {
-        navBar.classList.remove('show-nav');
-      }
-    });
-
     function saveNote(content) {
       notes.push(content);
     }
@@ -336,12 +224,10 @@
     function updateNoteList() {
       noteList.innerHTML = '';
       notes.forEach((note, index) => {
-        const div = document.createElement('div');
-        div.classList.add('note-box');
-        const p = document.createElement('p'); // New paragraph element
-        p.textContent = `Note ${index + 1}: ${note}`;
-        div.appendChild(p);
-        noteList.appendChild(div);
+        const noteBox = document.createElement('div');
+        noteBox.classList.add('note-box');
+        noteBox.textContent = `Note ${index + 1}: ${note}`;
+        noteList.appendChild(noteBox);
       });
     }
   </script>
