@@ -5,303 +5,126 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
-            font-family: 'Helvetica Neue', sans-serif;
-            background-color: #f7f8f9;
-            margin: 0;
-            padding: 0;
-        }
-        
-        header {
-            text-align: center;
-            background-color: #000;
-            color: white;
-            padding: 10px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
-        nav ul {
-            list-style: none;
+            font-family: 'Arial', sans-serif;
             display: flex;
             justify-content: center;
-            background-color: #fff;
-            padding: 10px 0;
-            border-bottom: 1px solid #ccc;
-        }
-        
-        nav ul li {
-            margin: 0 20px;
-        }
-        
-        nav a {
-            text-decoration: none;
-            color: #333;
-            font-weight: bold;
-            transition: color 0.2s;
-        }
-        
-        nav a:hover {
-            color: #000;
-        }
-        
-        section {
-            padding: 20px;
-            background-color: white;
-            margin: 10px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            display: none;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f8f8f8;
         }
 
-        textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: none;
-            box-shadow: inset 0px 0px 3px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            resize: vertical;
+        .flashcard {
+            perspective: 1000px;
         }
 
-        button {
-            padding: 10px 20px;
-            background-color: #000;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.2s;
-        }
-
-        button:hover {
-            background-color: #111;
-        }
-
-        ul {
-            list-style-type: none;
-            padding-left: 20px;
-            margin-top: 10px;
-        }
-
-        ul li {
-            margin-bottom: 8px;
-        }
-
-        #journal-entries p {
-            margin: 10px 0;
-            padding-bottom: 5px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        #quote {
-            margin-top: 20px;
-            font-style: italic;
-        }
-        
-        #todo-counter {
-            margin-top: 10px;
-            font-size: 14px;
-        }
-
-        /* Notion-like styles */
-        #dashboard-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        #dashboard-content > div {
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            overflow: hidden;
-        }
-
-        #dashboard-content h3 {
-            margin-bottom: 10px;
-        }
-
-        #dashboard-content ul {
-            padding-left: 20px;
-            margin-top: 10px;
-        }
-
-        #dashboard-content li {
-            margin-bottom: 8px;
+        .card {
+            width: 300px;
+            height: 200px;
             position: relative;
-            padding-left: 20px;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            background-color: white;
         }
 
-        #dashboard-content li::before {
-            content: '\2022';
+        .card:hover {
+            transform: rotateY(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            width: 100%;
+            height: 100%;
             position: absolute;
-            left: 0;
-            top: 0;
-            color: #000;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 15px;
         }
 
-        #dashboard-content blockquote {
-            margin-top: 20px;
-            border-left: 4px solid #000;
-            padding-left: 10px;
-            font-style: italic;
-            color: #555;
+        .card-front {
+            background-color: #0074D9;
+            color: white;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            background-color: white;
+            color: #333;
+        }
+
+        .language-btn {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ffcd1a;
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .language-btn:hover {
+            background-color: #ffc80a;
+            color: white;
+        }
+
+        .translation {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0;
         }
     </style>
-    <title>Productivity App</title>
+    <title>Language Learning App</title>
 </head>
 <body>
-    <header>
-        <h1>Productivity App</h1>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="#dashboard">Dashboard</a></li>
-            <li><a href="#goals">Goals</a></li>
-            <li><a href="#journal">Journal</a></li>
-        </ul>
-    </nav>
-    <section id="dashboard">
-        <h2>Dashboard</h2>
-        <div id="quote">
-            <!-- Rotating quotes will be displayed here -->
-        </div>
-        <div id="todo-counter">
-            <!-- To-do list counter will be displayed here -->
-        </div>
-        <div id="dashboard-content">
-            <div>
-                <h3>Quotes of the Day</h3>
-                <blockquote>Success is not final, failure is not fatal: It is the courage to continue that counts. - Winston Churchill</blockquote>
-                <blockquote>The only limit to our realization of tomorrow will be our doubts of today. - Franklin D. Roosevelt</blockquote>
-                <blockquote>The future belongs to those who believe in the beauty of their dreams. - Eleanor Roosevelt</blockquote>
+    <div class="flashcard">
+        <div class="card">
+            <div class="card-front">
+                <p>Select a language pair:</p>
+                <button class="language-btn">English to French</button>
+                <button class="language-btn">English to Spanish</button>
             </div>
-            <div>
-                <h3>To-Do List</h3>
-                <ul id="todo-list">
-                    <!-- Todo items will be dynamically added here -->
-                </ul>
-                <input type="text" id="todo-input" placeholder="Add a new task">
-                <button id="add-todo">Add</button>
-            </div>
-            <div>
-                <h3>Journal Entries</h3>
-                <textarea id="journal-text" placeholder="Write your thoughts here"></textarea>
-                <button id="save-journal">Save</button>
-                <div id="journal-entries">
-                    <!-- Journal entries will be displayed here -->
-                </div>
+            <div class="card-back">
+                <p class="translation"></p>
             </div>
         </div>
-    </section>
-    <section id="goals">
-        <h2>Goals</h2>
-        <div id="goal-form">
-            <input type="text" id="goal-input" placeholder="Enter a new goal">
-            <button id="add-goal">Add</button>
-        </div>
-        <div id="goal-list">
-            <!-- Goals will be displayed here -->
-        </div>
-    </section>
-    <section id="journal">
-        <!-- ... (your existing Journal section) ... -->
-    </section>
+    </div>
     <script>
-        const navLinks = document.querySelectorAll('nav a');
-        const sections = document.querySelectorAll('section');
+        const languageButtons = document.querySelectorAll('.language-btn');
+        const cardBack = document.querySelector('.card-back');
+        const translationText = document.querySelector('.translation');
 
-        navLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetSectionId = link.getAttribute('href');
-                sections.forEach(section => {
-                    section.style.display = 'none';
-                });
-                document.querySelector(targetSectionId).style.display = 'block';
+        const translations = {
+            'English to French': {
+                'apple': 'pomme',
+                'banana': 'banane',
+                'cat': 'chat',
+                'dog': 'chien',
+                'hello': 'bonjour'
+            },
+            'English to Spanish': {
+                'apple': 'manzana',
+                'banana': 'plátano',
+                'cat': 'gato',
+                'dog': 'perro',
+                'hello': 'hola'
+            }
+        };
+
+        languageButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const selectedPair = button.textContent;
+                const word = Object.keys(translations[selectedPair])[0];
+                const translation = translations[selectedPair][word];
+                translationText.textContent = `${word} (${translation})`;
             });
         });
-
-        // ... (your existing JavaScript code) ...
-
-        const quotes = [
-            "Success is not final, failure is not fatal: It is the courage to continue that counts. - Winston Churchill",
-            "The only limit to our realization of tomorrow will be our doubts of today. - Franklin D. Roosevelt",
-            "The future belongs to those who believe in the beauty of their dreams. - Eleanor Roosevelt"
-            // Add more quotes here
-        ];
-
-        let quoteIndex = 0;
-        const quoteElement = document.getElementById('quote');
-
-        function displayNextQuote() {
-            quoteElement.innerHTML = quotes[quoteIndex];
-            quoteIndex = (quoteIndex + 1) % quotes.length;
-        }
-
-        setInterval(displayNextQuote, 8000); // Rotate quotes every 8 seconds
-        displayNextQuote(); // Initial quote
-
-        function updateTodoCounter() {
-            const todoList = document.getElementById('todo-list');
-            const todoCounter = document.getElementById('todo-counter');
-            const numTodoItems = todoList.childElementCount;
-            todoCounter.textContent = `You have ${numTodoItems} to-do items.`;
-        }
-
-        // Call updateTodoCounter initially and whenever adding/removing todo items
-        updateTodoCounter();
-        document.getElementById('add-todo').addEventListener('click', function() {
-            const todoInput = document.getElementById('todo-input');
-            const todoList = document.getElementById('todo-list');
-            const newTodo = document.createElement('li');
-            newTodo.innerText = todoInput.value;
-            todoList.appendChild(newTodo);
-            todoInput.value = '';
-            updateTodoCounter(); // Update the counter
-        });
-
-        document.getElementById('save-journal').addEventListener('click', function() {
-            const journalText = document.getElementById('journal-text').value;
-            const journalEntries = document.getElementById('journal-entries');
-            const currentDate = new Date().toLocaleString();
-            const journalEntry = document.createElement('p');
-            journalEntry.innerHTML = `<strong>${currentDate}</strong>: ${journalText}`;
-            journalEntries.appendChild(journalEntry);
-            document.getElementById('journal-text').value = '';
-        });
-
-        <!-- ... (your existing JavaScript code) ... -->
-
-// Goal functionality
-document.getElementById('add-goal').addEventListener('click', function() {
-    const goalInput = document.getElementById('goal-input');
-    const goalList = document.getElementById('goal-list');
-    const newGoal = document.createElement('div');
-    newGoal.classList.add('goal-item');
-    newGoal.innerHTML = `
-        <input type="checkbox" class="goal-checkbox">
-        <span>${goalInput.value}</span>
-        <button class="advance-button">Advance</button>
-    `;
-    goalList.appendChild(newGoal);
-    goalInput.value = '';
-});
-
-document.addEventListener('click', function(event) {
-    if (event.target && event.target.classList.contains('advance-button')) {
-        const goalItem = event.target.closest('.goal-item');
-        if (goalItem) {
-            const goalCheckbox = goalItem.querySelector('.goal-checkbox');
-            if (goalCheckbox) {
-                goalCheckbox.checked = !goalCheckbox.checked;
-            }
-        }
-    }
-});
-
-// ... (your existing goal advance functionality) ...
-
     </script>
 </body>
 </html>
