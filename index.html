@@ -7,63 +7,103 @@
     <style>
         /* Your CSS styles here */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
         }
         
         .page {
-            margin: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
         }
-        
+
         .section {
-            padding: 10px;
-            border: 1px solid #ccc;
             margin-bottom: 20px;
         }
-        
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .task-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
         .task {
             display: flex;
             align-items: center;
             margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f4f4f4;
         }
-        
-        .checkbox {
-            margin-right: 10px;
+
+        .task-title {
+            margin-left: 10px;
+        }
+
+        .task-due {
+            margin-left: auto;
+            font-size: 0.8rem;
         }
 
         .note {
             width: 100%;
-            padding: 5px;
+            padding: 10px;
             margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+            resize: none;
+            background-color: #f4f4f4;
         }
 
         .note-button {
-            background-color: #007bff;
-            color: #fff;
+            background-color: #007aff;
+            color: white;
             border: none;
             padding: 5px 10px;
+            border-radius: 5px;
             cursor: pointer;
         }
 
         .note-list {
-            border-top: 1px solid #ccc;
-            padding-top: 10px;
-            margin-top: 10px;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
         }
 
         .note-item {
             margin-bottom: 5px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f4f4f4;
         }
 
         .calendar {
             border: 1px solid #ccc;
-            padding: 10px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
         }
 
         .calendar-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
         }
 
         .calendar-cell {
@@ -73,6 +113,7 @@
             align-items: center;
             justify-content: center;
             border: 1px solid #ccc;
+            border-radius: 50%;
         }
 
         .empty-cell {
@@ -85,29 +126,33 @@
         <h1>Productivity Dashboard</h1>
         
         <div class="section">
-            <h2>Tasks</h2>
-            <div class="task">
-                <input type="checkbox" class="checkbox">
-                <p>Sample Task 1</p>
-            </div>
-            <div class="task">
-                <input type="checkbox" class="checkbox">
-                <p>Sample Task 2</p>
-            </div>
-            <!-- Add more tasks here -->
+            <h2 class="section-title">Tasks</h2>
+            <ul class="task-list">
+                <li class="task">
+                    <input type="checkbox" class="checkbox">
+                    <div class="task-title">Sample Task 1</div>
+                    <div class="task-due">Due: Aug 25</div>
+                </li>
+                <li class="task">
+                    <input type="checkbox" class="checkbox">
+                    <div class="task-title">Sample Task 2</div>
+                    <div class="task-due">Due: Aug 30</div>
+                </li>
+                <!-- Add more tasks here -->
+            </ul>
         </div>
         
         <div class="section">
-            <h2>Notes</h2>
+            <h2 class="section-title">Notes</h2>
             <textarea class="note" placeholder="Take a note..."></textarea>
             <button class="note-button">Save Note</button>
-            <div class="note-list">
+            <ul class="note-list">
                 <!-- Display saved notes here -->
-            </div>
+            </ul>
         </div>
         
         <div class="section">
-            <h2>Calendar</h2>
+            <h2 class="section-title">Calendar</h2>
             <div class="calendar">
                 <div class="calendar-header">
                     <button class="prev-month">←</button>
@@ -128,7 +173,7 @@
         const checkboxes = document.querySelectorAll('.checkbox');
         checkboxes.forEach(checkbox => {
             checkbox.addEventListener('change', () => {
-                checkbox.nextElementSibling.classList.toggle('completed', checkbox.checked);
+                checkbox.parentElement.classList.toggle('completed', checkbox.checked);
             });
         });
 
@@ -140,7 +185,7 @@
         noteButton.addEventListener('click', () => {
             const noteText = noteTextarea.value;
             if (noteText.trim() !== '') {
-                const noteElement = document.createElement('div');
+                const noteElement = document.createElement('li');
                 noteElement.classList.add('note-item');
                 noteElement.textContent = noteText;
                 noteList.appendChild(noteElement);
