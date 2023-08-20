@@ -9,6 +9,7 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
+      transition: background-color 0.3s, color 0.3s; /* Add transition effect */
     }
     
     header {
@@ -31,7 +32,8 @@
       width: 60%;
       background-color: white;
       color: black;
-      margin-bottom: 1rem; /* Add margin at the bottom */
+      margin-bottom: 1rem;
+      transition: background-color 0.3s, color 0.3s; /* Add transition effect */
     }
     
     textarea {
@@ -41,6 +43,8 @@
       padding: 0.5rem;
       font-size: 14px;
       background-color: white;
+      color: black; /* Set text color for textarea */
+      transition: background-color 0.3s, color 0.3s; /* Add transition effect */
     }
     
     button {
@@ -50,6 +54,7 @@
       color: white;
       border: none;
       cursor: pointer;
+      transition: background-color 0.3s; /* Add transition effect */
     }
     
     ul {
@@ -130,7 +135,7 @@
     /* Keep text black in specific areas */
     .dark-mode .note-container,
     .dark-mode textarea {
-      color: black;
+      color: white; /* Set text color for dark mode */
     }
   </style>
   <title>Notion-like Web App</title>
