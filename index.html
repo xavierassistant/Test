@@ -21,7 +21,7 @@
     main {
       display: flex;
       justify-content: center;
-      align-items: flex-start; /* Align items at the top */
+      align-items: flex-start;
       height: 80vh;
     }
     
@@ -31,15 +31,7 @@
       width: 60%;
       background-color: white;
       color: black;
-    }
-    
-    .note-list {
-      border: 1px solid #ddd;
-      padding: 1rem;
-      width: 60%; /* Set the same width as .note-container */
-      margin-left: 1rem;
-      background-color: white;
-      font-size: 14px;
+      margin-bottom: 1rem; /* Add margin at the bottom */
     }
     
     textarea {
@@ -140,11 +132,6 @@
     .dark-mode textarea {
       color: black;
     }
-    
-    /* Set background color for note list */
-    .dark-mode .note-list {
-      background-color: white;
-    }
   </style>
   <title>Notion-like Web App</title>
 </head>
@@ -163,9 +150,7 @@
     <div class="note-container">
       <textarea id="note-content" placeholder="Write your notes here..."></textarea>
       <button id="save-button">Save</button>
-    </div>
-    <div class="note-list">
-      <h2>Your Notes</h2>
+      <h2>Saved Notes</h2>
       <ul id="note-list"></ul>
     </div>
   </main>
