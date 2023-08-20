@@ -1,221 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Productivity Website</title>
-    <style>
-        /* Your CSS styles here */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8f8f8;
-            margin: 0;
-        }
-        
-        .page {
-            max-width: 800px;
-            margin: 20px auto;
-            background-color: white;
-            padding: 20px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-        }
-
-        .section {
-            margin-bottom: 20px;
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-
-        .task-list {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .task {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: #f4f4f4;
-        }
-
-        .task-title {
-            margin-left: 10px;
-        }
-
-        .task-due {
-            margin-left: auto;
-            font-size: 0.8rem;
-        }
-
-        .note {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: none;
-            border-radius: 5px;
-            resize: none;
-            background-color: #f4f4f4;
-        }
-
-        .note-button {
-            background-color: #007aff;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .note-list {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .note-item {
-            margin-bottom: 5px;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: #f4f4f4;
-        }
-
-        .calendar {
-            border: 1px solid #ccc;
-            padding: 20px;
-            background-color: white;
-            border-radius: 5px;
-        }
-
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
-        }
-
-        .calendar-cell {
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid #ccc;
-            border-radius: 50%;
-        }
-
-        .empty-cell {
-            background-color: #f7f7f7;
-        }
-    </style>
-</head>
-<body>
-    <div class="page">
-        <h1>Productivity Dashboard</h1>
-        
-        <div class="section">
-            <h2 class="section-title">Tasks</h2>
-            <ul class="task-list">
-                <li class="task">
-                    <input type="checkbox" class="checkbox">
-                    <div class="task-title">Sample Task 1</div>
-                    <div class="task-due">Due: Aug 25</div>
-                </li>
-                <li class="task">
-                    <input type="checkbox" class="checkbox">
-                    <div class="task-title">Sample Task 2</div>
-                    <div class="task-due">Due: Aug 30</div>
-                </li>
-                <!-- Add more tasks here -->
-            </ul>
-        </div>
-        
-        <div class="section">
-            <h2 class="section-title">Notes</h2>
-            <textarea class="note" placeholder="Take a note..."></textarea>
-            <button class="note-button">Save Note</button>
-            <ul class="note-list">
-                <!-- Display saved notes here -->
-            </ul>
-        </div>
-        
-        <div class="section">
-            <h2 class="section-title">Calendar</h2>
-            <div class="calendar">
-                <div class="calendar-header">
-                    <button class="prev-month">←</button>
-                    <h3 class="current-month-year">August 2023</h3>
-                    <button class="next-month">→</button>
-                </div>
-                <div class="calendar-grid">
-                    <!-- Calendar days will be dynamically generated here -->
-                </div>
-            </div>
-        </div>
+<div class="app-container">
+  <div class="app-header">
+    <div class="app-header-left">
+      <span class="app-icon"></span>
+      <p class="app-name">Portfolio</p>
+      <div class="search-wrapper">
+        <input class="search-input" type="text" placeholder="Search">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-search" viewBox="0 0 24 24">
+          <defs></defs>
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="M21 21l-4.35-4.35"></path>
+        </svg>
+      </div>
     </div>
-    
-    <script>
-        // Your JavaScript code here
-        
-        // Toggle task completion status
-        const checkboxes = document.querySelectorAll('.checkbox');
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', () => {
-                checkbox.parentElement.classList.toggle('completed', checkbox.checked);
-            });
-        });
-
-        // Save and display notes
-        const noteTextarea = document.querySelector('.note');
-        const noteButton = document.querySelector('.note-button');
-        const noteList = document.querySelector('.note-list');
-        
-        noteButton.addEventListener('click', () => {
-            const noteText = noteTextarea.value;
-            if (noteText.trim() !== '') {
-                const noteElement = document.createElement('li');
-                noteElement.classList.add('note-item');
-                noteElement.textContent = noteText;
-                noteList.appendChild(noteElement);
-                noteTextarea.value = '';
-            }
-        });
-
-        // Calendar navigation
-        const prevMonthButton = document.querySelector('.prev-month');
-        const nextMonthButton = document.querySelector('.next-month');
-        const currentMonthYear = document.querySelector('.current-month-year');
-        const calendarGrid = document.querySelector('.calendar-grid');
-
-        const currentDate = new Date();
-        let currentMonth = currentDate.getMonth();
-        let currentYear = currentDate.getFullYear();
-
-        function updateCalendar() {
-            // ... Calendar update logic ...
-        }
-
-        prevMonthButton.addEventListener('click', () => {
-            // ... Previous month logic ...
-        });
-
-        nextMonthButton.addEventListener('click', () => {
-            // ... Next month logic ...
-        });
-
-        updateCalendar();
-    </script>
-</body>
-</html>
+    <div class="app-header-right">
+      <button class="mode-switch" title="Switch Theme">
+        <svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
+          <defs></defs>
+          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+        </svg>
+      </button>
+      <button class="add-btn" title="Add New Project">
+        <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+          <line x1="12" y1="5" x2="12" y2="19" />
