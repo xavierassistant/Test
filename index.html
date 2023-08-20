@@ -5,128 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f8f8f8;
+            background-color: #f5f5f5;
         }
 
-        .home-container {
+        .kanban-board {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            justify-content: space-between;
+            padding: 20px;
         }
 
-        .language-button {
-            background-color: #0074D9;
-            color: white;
-            border: none;
+        .column {
+            flex: 1;
+            background-color: #f9f9f9;
             border-radius: 5px;
-            padding: 10px 20px;
-            font-size: 18px;
-            cursor: pointer;
-            margin: 10px;
-        }
-
-        .flashcard-tiles {
-            display: flex;
-            justify-content: flex-end;
             padding: 10px;
-            background-color: #333;
-            color: white;
+            margin: 0 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .flashcard-tile {
-            background-color: #444;
-            color: white;
-            border: none;
+        .task {
+            background-color: #e1f7d5;
             border-radius: 5px;
-            padding: 5px 10px;
-            font-size: 14px;
-            cursor: pointer;
-            margin: 5px;
-        }
-
-        .flashcard-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-        }
-
-        .flashcard {
-            width: 300px;
-            height: 200px;
-            background-color: white;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-
-        .flashcard.flip {
-            transform: rotateY(180deg);
-        }
-
-        .back-arrow {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: #0074D9;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 5px 10px;
-            font-size: 14px;
+            margin: 5px 0;
+            padding: 10px;
             cursor: pointer;
         }
     </style>
-    <title>Language Learning App</title>
+    <title>Kanban Board</title>
 </head>
 <body>
-    <div class="home-container">
-        <button class="language-button" onclick="openFlashcardPage('English to French')">English to French</button>
-        <button class="language-button" onclick="openFlashcardPage('English to Spanish')">English to Spanish</button>
-    </div>
-
-    <div class="flashcard-modal">
-        <div class="flashcard" id="flashcard">
-            <div class="back-arrow" onclick="closeFlashcardPage()">← Back</div>
-            <div class="flashcard-content">
-                <div class="flashcard-front">English</div>
-                <div class="flashcard-back">Translation</div>
-            </div>
+    <div class="kanban-board">
+        <div class="column" id="todo-column">
+            <h2>Todo</h2>
+            <div class="task" draggable="true">Task 1</div>
+            <div class="task" draggable="true">Task 2</div>
+        </div>
+        <div class="column" id="in-progress-column">
+            <h2>In Progress</h2>
+        </div>
+        <div class="column" id="done-column">
+            <h2>Done</h2>
         </div>
     </div>
-
     <script>
-        const flashcardModal = document.querySelector('.flashcard-modal');
-        const flashcard = document.querySelector('.flashcard');
-        const flashcardFront = document.querySelector('.flashcard-front');
-        const flashcardBack = document.querySelector('.flashcard-back');
+        const tasks = document.querySelectorAll('.task');
+        const columns = document.querySelectorAll('.column');
 
-        const openFlashcardPage = (languagePair) => {
-            flashcardModal.style.display = 'flex';
-            flashcardFront.textContent = 'English';
-            flashcardBack.textContent = 'Translation';
-        };
-
-        const closeFlashcardPage = () => {
-            flashcardModal.style.display = 'none';
-        };
-
-        flashcard.addEventListener('click', () => {
-            flashcard.classList.toggle('flip');
+        tasks.forEach(task => {
+            task.addEventListener('dragstart', dragStart);
         });
+
+        columns.forEach(column => {
+            column.addEventListener('dragover', dragOver);
+            column.addEventListener('drop', drop);
+        });
+
+        function dragStart(event) {
+            event.dataTransfer.setData('text/plain', event.target.id);
+        }
+
+        function dragOver(event) {
+            event.preventDefault();
+        }
+
+        function drop(event) {
+            event.preventDefault();
+            const taskId = event.dataTransfer.getData('text/plain');
+            const task = document.getElementById(taskId);
+            event.target.appendChild(task);
+        }
     </script>
 </body>
 </html>
