@@ -49,6 +49,13 @@
       word-wrap: break-word;
     }
     
+    /* Additional styles for note boxes in dark mode */
+    .dark-mode .note-box {
+      background-color: #333;
+      color: white;
+      border-color: #555;
+    }
+    
     textarea {
       width: 100%;
       height: 200px;
@@ -146,6 +153,7 @@
     }
     
     .dark-mode .note-container,
+    .dark-mode .note-box, /* Add this line */
     .dark-mode textarea,
     .dark-mode button,
     .dark-mode ul {
