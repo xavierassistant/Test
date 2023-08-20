@@ -7,41 +7,55 @@
     body {
       margin: 0;
       overflow: hidden;
-      background-color: black;
+      background-color: #f0f0f0;
     }
-    
-    .city {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-      background: url('cityscape.jpg') center/cover no-repeat;
-    }
-    
-    .car {
-      position: absolute;
-      bottom: 0;
-      left: 10px;
-      width: 80px;
+
+    .ball {
+      width: 40px;
       height: 40px;
       background-color: red;
-      animation: drive 5s linear infinite;
+      border-radius: 50%;
+      position: absolute;
+      animation: spin 3s linear infinite;
     }
-    
-    @keyframes drive {
-      0% {
-        left: -100px;
-      }
-      100% {
-        left: calc(100vw + 100px);
-      }
+
+    @keyframes spin {
+      0% { transform: translateX(0) rotate(0); }
+      100% { transform: translateX(calc(100vw - 40px)) rotate(360deg); }
+    }
+
+    .piece {
+      width: 20px;
+      height: 20px;
+      background-color: red;
+      position: absolute;
+      animation: explode 0.5s ease-in-out forwards;
+    }
+
+    @keyframes explode {
+      0% { opacity: 1; transform: translateY(0) rotate(0); }
+      100% { opacity: 0; transform: translateY(100px) rotate(45deg); }
     }
   </style>
-  <title>Car Animation</title>
+  <title>Ball Animation</title>
 </head>
 <body>
-  <div class="city">
-    <div class="car"></div>
-  </div>
+  <div class="ball"></div>
+  <script>
+    const ball = document.querySelector('.ball');
+
+    ball.addEventListener('animationiteration', () => {
+      const numPieces = 8;
+      for (let i = 0; i < numPieces; i++) {
+        const piece = document.createElement('div');
+        piece.classList.add('piece');
+        piece.style.left = ball.getBoundingClientRect().left + 'px';
+        piece.style.top = ball.getBoundingClientRect().top + 'px';
+        document.body.appendChild(piece);
+      }
+      ball.remove();
+    });
+  </script>
 </body>
 </html>
+ 
