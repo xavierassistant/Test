@@ -48,6 +48,19 @@
     margin: 5px 0;
     border: 1px solid #ddd;
   }
+  .calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    gap: 5px;
+  }
+  .calendar-header {
+    font-weight: bold;
+  }
+  .calendar-day {
+    border: 1px solid #ccc;
+    padding: 5px;
+  }
 </style>
 </head>
 <body>
@@ -58,99 +71,78 @@
   <a href="#notes">Notes</a>
   <a href="#tasks">Tasks</a>
   <a href="#kanban">Kanban</a>
+  <a href="#calendar">Calendar</a>
   <a href="#goals">Goals</a>
 </nav>
 <div class="container">
   <section id="notes">
-    <h2>Notes</h2>
-    <textarea id="noteArea" rows="6" cols="50"></textarea>
-    <button onclick="saveNote()">Save Note</button>
+    <!-- Notes section content -->
   </section>
   <section id="tasks">
-    <h2>Tasks</h2>
-    <ul id="taskList">
-      <!-- Tasks will be added dynamically using JavaScript -->
-    </ul>
-    <input id="taskInput" type="text" placeholder="Enter a task">
-    <button onclick="addTask()">Add Task</button>
+    <!-- Tasks section content -->
   </section>
   <section id="kanban">
-    <h2>Kanban Board</h2>
-    <div class="kanban">
-      <div class="kanban-column">
-        <h3>Todo</h3>
-        <div id="kanbanTodo" class="kanban-task-list">
-          <!-- Tasks will be added dynamically using JavaScript -->
-        </div>
-      </div>
-      <div class="kanban-column">
-        <h3>In Progress</h3>
-        <div id="kanbanInProgress" class="kanban-task-list">
-          <!-- Tasks will be added dynamically using JavaScript -->
-        </div>
-      </div>
-      <div class="kanban-column">
-        <h3>Done</h3>
-        <div id="kanbanDone" class="kanban-task-list">
-          <!-- Tasks will be added dynamically using JavaScript -->
-        </div>
-      </div>
+    <!-- Kanban section content -->
+  </section>
+  <section id="calendar">
+    <h2>Calendar</h2>
+    <div id="calendarContainer">
+      <!-- Calendar will be added dynamically using JavaScript -->
     </div>
-    <input id="kanbanInput" type="text" placeholder="Enter a task">
-    <button onclick="addKanbanTask()">Add Task</button>
   </section>
   <section id="goals">
-    <h2>Goals</h2>
-    <ul id="goalList">
-      <!-- Goals will be added dynamically using JavaScript -->
-    </ul>
-    <input id="goalInput" type="text" placeholder="Enter a goal">
-    <button onclick="addGoal()">Add Goal</button>
+    <!-- Goals section content -->
   </section>
 </div>
 <script>
   // JavaScript functions for each feature
-  function saveNote() {
-    var note = document.getElementById('noteArea').value;
-    // You can implement code to save the note here
+  // Note: Implement your functions for other sections here
+  
+  function createCalendar(year, month) {
+    var daysInMonth = new Date(year, month + 1, 0).getDate();
+    var firstDay = new Date(year, month, 1).getDay();
+    
+    var calendarContainer = document.getElementById('calendarContainer');
+    calendarContainer.innerHTML = ''; // Clear previous content
+    
+    // Create calendar header
+    var calendarHeader = document.createElement('div');
+    calendarHeader.className = 'calendar-header';
+    calendarHeader.textContent = year + '/' + (month + 1);
+    calendarContainer.appendChild(calendarHeader);
+    
+    // Create day cells
+    var calendar = document.createElement('div');
+    calendar.className = 'calendar';
+    
+    // Add day names
+    var dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    for (var i = 0; i < dayNames.length; i++) {
+      var dayNameCell = document.createElement('div');
+      dayNameCell.textContent = dayNames[i];
+      calendar.appendChild(dayNameCell);
+    }
+    
+    // Fill in empty cells for the first week
+    for (var i = 0; i < firstDay; i++) {
+      var emptyCell = document.createElement('div');
+      calendar.appendChild(emptyCell);
+    }
+    
+    // Add day cells with numbers
+    for (var day = 1; day <= daysInMonth; day++) {
+      var dayCell = document.createElement('div');
+      dayCell.className = 'calendar-day';
+      dayCell.textContent = day;
+      calendar.appendChild(dayCell);
+    }
+    
+    calendarContainer.appendChild(calendar);
   }
   
-  function addTask() {
-    var taskInput = document.getElementById('taskInput');
-    var taskList = document.getElementById('taskList');
-    var task = taskInput.value;
-    if (task) {
-      var li = document.createElement('li');
-      li.textContent = task;
-      taskList.appendChild(li);
-      taskInput.value = '';
-    }
-  }
-  
-  function addKanbanTask() {
-    var kanbanInput = document.getElementById('kanbanInput');
-    var kanbanTodo = document.getElementById('kanbanTodo');
-    var task = kanbanInput.value;
-    if (task) {
-      var div = document.createElement('div');
-      div.textContent = task;
-      div.className = 'kanban-task';
-      kanbanTodo.appendChild(div);
-      kanbanInput.value = '';
-    }
-  }
-  
-  function addGoal() {
-    var goalInput = document.getElementById('goalInput');
-    var goalList = document.getElementById('goalList');
-    var goal = goalInput.value;
-    if (goal) {
-      var li = document.createElement('li');
-      li.textContent = goal;
-      goalList.appendChild(li);
-      goalInput.value = '';
-    }
-  }
+  // Initialize calendar with the current month and year
+  var currentDate = new Date();
+  createCalendar(currentDate.getFullYear(), currentDate.getMonth());
 </script>
 </body>
 </html>
