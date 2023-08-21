@@ -1,430 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-    }
-    
-    header {
-      background-color: #333;
-      color: white;
-      text-align: center;
-      padding: 1rem;
-    }
-    
-    main {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      height: 80vh;
-    }
-    
-    .note-container {
-      border: 1px solid #ddd;
-      padding: 1rem;
-      width: 60%;
-      background-color: white;
-      color: black;
-      margin-bottom: 1rem;
-      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-      overflow: hidden;
-      word-wrap: break-word;
-    }
-    
-     .note-box {
-  border: none;
-  padding: 1rem;
-  margin: 0.5rem 0;
-  background-color: #ffeb3b; /* Yellow color */
-  position: relative;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  overflow: hidden;
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-}
-
-.note-box:before {
-  content: "";
-  position: absolute;
-  top: -10px;
-  right: 0;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 10px 10px 0 0;
-  border-color: #ffeb3b transparent transparent transparent;
-}
-
-.note-box:after {
-  content: "";
-  position: absolute;
-  bottom: -10px;
-  left: 0;
-  width: 40px;
-  height: 20px;
-  background-color: #ffeb3b; /* Yellow color */
-  transform: rotate(-10deg);
-}
-
-
-
-    
-    .dark-mode .note-box {
-      background-color: #333;
-      color: white;
-      border-color: #555;
-    }
-
-    .dark-mode .note-box p {
-      color: white;
-    }
-    
-    textarea {
-      width: 100%;
-      height: 200px;
-      border: 1px solid #ccc;
-      padding: 0.5rem;
-      font-size: 14px;
-      background-color: white;
-      color: black;
-      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-    }
-    
-    button {
-      margin-top: 0.5rem;
-      padding: 0.5rem 1rem;
-      background-color: #333;
-      color: white;
-      border: 1px solid #333;
-      cursor: pointer;
-      transition: background-color 0.3s, border-color 0.3s;
-    }
-    
-    ul {
-      list-style: none;
-      padding: 0;
-      margin-top: 1rem;
-      max-height: 250px; /* Adjust as needed */
-      overflow-y: auto;
-    }
-    
-    .dark-mode {
-      background-color: #222;
-      color: white;
-    }
-    
-    .dark-mode-toggle {
-      display: flex;
-      align-items: center;
-    }
-    
-    .dark-mode-toggle label {
-      margin-left: 10px;
-      cursor: pointer;
-    }
-
-    .toggle-input {
-      display: none;
-    }
-    
-    .toggle-label {
-      display: inline-block;
-      width: 40px;
-      height: 20px;
-      background-color: #ccc;
-      border-radius: 20px;
-      cursor: pointer;
-      position: relative;
-    }
-    
-    .toggle-inner {
-      display: block;
-      width: 16px;
-      height: 16px;
-      background-color: white;
-      border-radius: 50%;
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      transition: left 0.3s ease-in-out;
-    }
-    
-    .toggle-switch {
-      display: block;
-      width: 18px;
-      height: 18px;
-      background-color: #fff;
-      border-radius: 50%;
-      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-      position: absolute;
-      top: 1px;
-      left: 1px;
-      transition: left 0.3s ease-in-out;
-    }
-    
-    .toggle-input:checked + .toggle-label .toggle-inner {
-      left: 20px;
-    }
-    
-    .toggle-input:checked + .toggle-label .toggle-switch {
-      left: 20px;
-      background-color: #333;
-    }
-
-    .dark-mode * {
-      color: white;
-    }
-    
-    .dark-mode .note-container,
-    .dark-mode .note-box,
-    .dark-mode textarea,
-    .dark-mode button,
-    .dark-mode ul {
-      background-color: #222;
-      color: white;
-    }
-
-    .dark-mode button {
-      border-color: #eee;
-    }
-    
-    .notification {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: rgba(0, 0, 0, 0.7);
-      color: white;
-      padding: 10px 20px;
-      border-radius: 5px;
-      font-size: 14px;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    
-    .show-notification {
-      opacity: 1;
-    }
-
-    .nav-bar {
-      position: fixed;
-      top: 0;
-      left: -260px;
-      width: 250px;
-      height: 100vh;
-      background-color: #222;
-      color: white;
-      transition: left 0.3s;
-      z-index: 1000;
-    }
-    
-    .nav-bar.show-nav {
-      left: 0;
-    }
-    
-    .nav-header {
-      background-color: #333;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-    }
-    
-    .nav-toggle {
-      color: white;
-      font-size: 24px;
-      cursor: pointer;
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
-    }
-
-    .nav-list {
-      list-style: none;
-      padding: 0;
-      margin: 2rem 0;
-    }
-    
-    .nav-item {
-      padding: 1rem;
-      font-size: 18px;
-      cursor: pointer;
-      transition: background-color 0.3s, color 0.3s;
-      text-align: center;
-    }
-    
-    .nav-item:hover {
-      background-color: #333;
-      color: white;
-    }
-
-    .nav-list .nav-item a.nav-link {
-  color: white;
-}
-
-    body {
-  font-family: "Helvetica Neue", sans-serif;
-  background-color: #f2f2f2;
-}
-
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
-  background-color: white;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-}
-
-
-  </style>
-  <title>Notion-like Web Apps</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personal Dashboard</title>
+<style>
+  /* Basic styling */
+  body {
+    font-family: Arial, sans-serif;
+  }
+  header {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+  }
+  nav {
+    background-color: #666;
+    padding: 5px;
+  }
+  nav a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+</style>
 </head>
 <body>
-  <header>
-    <h1>My Notion-like App</h1>
-    <div class="dark-mode-toggle">
-      <input type="checkbox" id="dark-mode-toggle" class="toggle-input">
-      <label for="dark-mode-toggle" class="toggle-label">
-        <span class="toggle-inner"></span>
-        <span class="toggle-switch"></span>
-      </label>
-    </div>
-    <div class="nav-toggle" id="nav-toggle"><i class="fas fa-bars"></i></div>
-  </header>
-  <nav class="nav-bar" id="nav-bar">
-    <div class="nav-header">
-      <h2>Navigation</h2>
-    </div>
-    <ul class="nav-list">
-      <li class="nav-item">
-        <a href="#" class="nav-link"><i class="fas fa-home"></i> Notes Page</a>
-      </li>
-      <li class="nav-item" id="dark-mode-nav">
-        <label class="switch-label">
-          <i class="fas fa-adjust"></i> Toggle Dark Mode
-          <input type="checkbox" id="dark-mode-switch" class="toggle-input">
-          <span class="toggle-switch"></span>
-        </label>
-      </li>
+<header>
+  <h1>Personal Dashboard</h1>
+</header>
+<nav>
+  <a href="#notes">Notes</a>
+  <a href="#tasks">Tasks</a>
+  <a href="#bookmarks">Bookmarks</a>
+  <a href="#goals">Goals</a>
+</nav>
+<div class="container">
+  <section id="notes">
+    <h2>Notes</h2>
+    <textarea id="noteArea" rows="6" cols="50"></textarea>
+    <button onclick="saveNote()">Save Note</button>
+  </section>
+  <section id="tasks">
+    <h2>Tasks</h2>
+    <ul id="taskList">
+      <!-- Tasks will be added dynamically using JavaScript -->
     </ul>
-  </nav>
-<main>
-  <div class="container">
-    <h2>Your Notes</h2>
-    <textarea id="note-content" placeholder="Write your notes here..."></textarea>
-    <button id="save-button">Save</button>
-    <div id="note-list"></div>
-  </div>
-</main>
-  <div class="notification" id="notification">Note saved!</div>
-  <script>
-    const saveButton = document.getElementById('save-button');
-    const noteContent = document.getElementById('note-content');
-    const noteList = document.getElementById('note-list');
-    const darkModeToggle = document.getElementById('dark-mode-toggle');
-    const darkModeSwitch = document.getElementById('dark-mode-switch');
-    const body = document.body;
-    const notes = [];
-    const notification = document.getElementById('notification');
-    const navToggle = document.getElementById('nav-toggle');
-    const navBar = document.getElementById('nav-bar');
-    const darkModeNav = document.getElementById('dark-mode-nav');
-    
-    function showNotification() {
-      notification.classList.add('show-notification');
-      setTimeout(() => {
-        notification.classList.remove('show-notification');
-      }, 2000); // Display for 2 seconds
+    <input id="taskInput" type="text" placeholder="Enter a task">
+    <button onclick="addTask()">Add Task</button>
+  </section>
+  <section id="bookmarks">
+    <h2>Bookmarks</h2>
+    <ul id="bookmarkList">
+      <!-- Bookmarks will be added dynamically using JavaScript -->
+    </ul>
+    <input id="bookmarkInput" type="text" placeholder="Enter a bookmark URL">
+    <button onclick="addBookmark()">Add Bookmark</button>
+  </section>
+  <section id="goals">
+    <h2>Goals</h2>
+    <ul id="goalList">
+      <!-- Goals will be added dynamically using JavaScript -->
+    </ul>
+    <input id="goalInput" type="text" placeholder="Enter a goal">
+    <button onclick="addGoal()">Add Goal</button>
+  </section>
+</div>
+<script>
+  // JavaScript functions for each feature
+  function saveNote() {
+    var note = document.getElementById('noteArea').value;
+    // You can implement code to save the note here
+  }
+  
+  function addTask() {
+    var taskInput = document.getElementById('taskInput');
+    var taskList = document.getElementById('taskList');
+    var task = taskInput.value;
+    if (task) {
+      var li = document.createElement('li');
+      li.textContent = task;
+      taskList.appendChild(li);
+      taskInput.value = '';
     }
-
-    saveButton.addEventListener('click', () => {
-      const content = noteContent.value;
-      if (content.trim() !== '') {
-        saveNote(content);
-        updateNoteList();
-        showNotification();
-      } else {
-        alert('Please enter some content.');
-      }
-    });
-
-    darkModeToggle.addEventListener('change', () => {
-      body.classList.toggle('dark-mode', darkModeToggle.checked);
-    });
-
-    darkModeSwitch.addEventListener('change', () => {
-      darkModeToggle.checked = darkModeSwitch.checked;
-      body.classList.toggle('dark-mode', darkModeToggle.checked);
-    });
-
-    navToggle.addEventListener('click', () => {
-      navBar.classList.toggle('show-nav');
-    });
-
-    body.addEventListener('click', (event) => {
-      if (!event.target.closest('.nav-bar') && !event.target.closest('.nav-toggle')) {
-        navBar.classList.remove('show-nav');
-      }
-    });
-
-    function saveNote(content) {
-      notes.push(content);
+  }
+  
+  function addBookmark() {
+    var bookmarkInput = document.getElementById('bookmarkInput');
+    var bookmarkList = document.getElementById('bookmarkList');
+    var bookmarkURL = bookmarkInput.value;
+    if (bookmarkURL) {
+      var li = document.createElement('li');
+      var link = document.createElement('a');
+      link.href = bookmarkURL;
+      link.textContent = bookmarkURL;
+      li.appendChild(link);
+      bookmarkList.appendChild(li);
+      bookmarkInput.value = '';
     }
-
-    function updateNoteList() {
-      noteList.innerHTML = '';
-      notes.forEach((note, index) => {
-        const div = document.createElement('div');
-        div.classList.add('note-box');
-        
-        const p = document.createElement('p');
-        p.textContent = `Note ${index + 1}: ${note}`;
-        div.appendChild(p);
-        
-        const actionsDiv = document.createElement('div');
-        actionsDiv.classList.add('actions');
-        
-        const editButton = document.createElement('button');
-        editButton.textContent = 'Edit';
-        editButton.addEventListener('click', () => {
-          editNote(index);
-        });
-        actionsDiv.appendChild(editButton);
-        
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Delete';
-        deleteButton.addEventListener('click', () => {
-          deleteNote(index);
-        });
-        actionsDiv.appendChild(deleteButton);
-        
-        div.appendChild(actionsDiv);
-        
-        noteList.appendChild(div);
-      });
+  }
+  
+  function addGoal() {
+    var goalInput = document.getElementById('goalInput');
+    var goalList = document.getElementById('goalList');
+    var goal = goalInput.value;
+    if (goal) {
+      var li = document.createElement('li');
+      li.textContent = goal;
+      goalList.appendChild(li);
+      goalInput.value = '';
     }
-    
-    function editNote(index) {
-      const newContent = prompt('Edit the note:', notes[index]);
-      if (newContent !== null) {
-        notes[index] = newContent;
-        updateNoteList();
-      }
-    }
-    
-    function deleteNote(index) {
-      if (confirm('Are you sure you want to delete this note?')) {
-        notes.splice(index, 1);
-        updateNoteList();
-      }
-    }
-  </script>
+  }
+</script>
 </body>
 </html>
