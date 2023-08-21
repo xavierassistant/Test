@@ -38,7 +38,7 @@
       word-wrap: break-word;
     }
     
-      .note-box {
+     .note-box {
   border: none;
   padding: 1rem;
   margin: 0.5rem 0;
@@ -53,17 +53,30 @@
 .note-box:before {
   content: "";
   position: absolute;
-  top: 0;
+  top: -10px;
   left: 50%;
   transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border: 20px solid transparent;
-  border-bottom-color: #ffeb3b; /* Yellow color */
-  border-top: none;
-  border-left: none;
-  border-right: none;
+  width: 40px;
+  height: 20px;
+  background-color: #ffeb3b; /* Yellow color */
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+.note-box:after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  background-color: #ffeb3b; /* Yellow color */
+  border-radius: 50%;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 
     
     .dark-mode .note-box {
