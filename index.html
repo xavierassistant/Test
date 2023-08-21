@@ -38,15 +38,33 @@
       word-wrap: break-word;
     }
     
-    .note-box {
-      border: 1px solid #ccc;
-      padding: 1rem;
-      margin: 0.5rem 0;
-      background-color: white;
-      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-      overflow: hidden;
-      word-wrap: break-word;
-    }
+   .note-box {
+  border: none;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  background-color: #ffeb3b; /* Yellow color */
+  position: relative;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.note-box:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border: 20px solid transparent;
+  border-bottom-color: #ffeb3b; /* Yellow color */
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
     
     .dark-mode .note-box {
       background-color: #333;
