@@ -268,6 +268,21 @@
   color: white;
 }
 
+    body {
+  font-family: "Helvetica Neue", sans-serif;
+  background-color: #f2f2f2;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+
   </style>
   <title>Notion-like Web Apps</title>
 </head>
@@ -300,14 +315,14 @@
       </li>
     </ul>
   </nav>
-  <main>
-    <div class="note-container">
-      <textarea id="note-content" placeholder="Write your notes here..."></textarea>
-      <button id="save-button">Save</button>
-      <h2>Saved Notes</h2>
-      <div id="note-list"></div>
-    </div>
-  </main>
+<main>
+  <div class="container">
+    <h2>Your Notes</h2>
+    <textarea id="note-content" placeholder="Write your notes here..."></textarea>
+    <button id="save-button">Save</button>
+    <div id="note-list"></div>
+  </div>
+</main>
   <div class="notification" id="notification">Note saved!</div>
   <script>
     const saveButton = document.getElementById('save-button');
