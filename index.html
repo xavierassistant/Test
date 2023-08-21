@@ -29,6 +29,25 @@
     margin: 0 auto;
     padding: 20px;
   }
+  .kanban {
+    display: flex;
+    justify-content: space-between;
+  }
+  .kanban-column {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin: 0 5px;
+  }
+  .kanban-column h3 {
+    text-align: center;
+  }
+  .kanban-task {
+    background-color: #f5f5f5;
+    padding: 5px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+  }
 </style>
 </head>
 <body>
@@ -38,7 +57,7 @@
 <nav>
   <a href="#notes">Notes</a>
   <a href="#tasks">Tasks</a>
-  <a href="#bookmarks">Bookmarks</a>
+  <a href="#kanban">Kanban</a>
   <a href="#goals">Goals</a>
 </nav>
 <div class="container">
@@ -55,13 +74,30 @@
     <input id="taskInput" type="text" placeholder="Enter a task">
     <button onclick="addTask()">Add Task</button>
   </section>
-  <section id="bookmarks">
-    <h2>Bookmarks</h2>
-    <ul id="bookmarkList">
-      <!-- Bookmarks will be added dynamically using JavaScript -->
-    </ul>
-    <input id="bookmarkInput" type="text" placeholder="Enter a bookmark URL">
-    <button onclick="addBookmark()">Add Bookmark</button>
+  <section id="kanban">
+    <h2>Kanban Board</h2>
+    <div class="kanban">
+      <div class="kanban-column">
+        <h3>Todo</h3>
+        <div id="kanbanTodo" class="kanban-task-list">
+          <!-- Tasks will be added dynamically using JavaScript -->
+        </div>
+      </div>
+      <div class="kanban-column">
+        <h3>In Progress</h3>
+        <div id="kanbanInProgress" class="kanban-task-list">
+          <!-- Tasks will be added dynamically using JavaScript -->
+        </div>
+      </div>
+      <div class="kanban-column">
+        <h3>Done</h3>
+        <div id="kanbanDone" class="kanban-task-list">
+          <!-- Tasks will be added dynamically using JavaScript -->
+        </div>
+      </div>
+    </div>
+    <input id="kanbanInput" type="text" placeholder="Enter a task">
+    <button onclick="addKanbanTask()">Add Task</button>
   </section>
   <section id="goals">
     <h2>Goals</h2>
@@ -91,18 +127,16 @@
     }
   }
   
-  function addBookmark() {
-    var bookmarkInput = document.getElementById('bookmarkInput');
-    var bookmarkList = document.getElementById('bookmarkList');
-    var bookmarkURL = bookmarkInput.value;
-    if (bookmarkURL) {
-      var li = document.createElement('li');
-      var link = document.createElement('a');
-      link.href = bookmarkURL;
-      link.textContent = bookmarkURL;
-      li.appendChild(link);
-      bookmarkList.appendChild(li);
-      bookmarkInput.value = '';
+  function addKanbanTask() {
+    var kanbanInput = document.getElementById('kanbanInput');
+    var kanbanTodo = document.getElementById('kanbanTodo');
+    var task = kanbanInput.value;
+    if (task) {
+      var div = document.createElement('div');
+      div.textContent = task;
+      div.className = 'kanban-task';
+      kanbanTodo.appendChild(div);
+      kanbanInput.value = '';
     }
   }
   
