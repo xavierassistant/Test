@@ -3,85 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sticky Notes</title>
+    <title>Interactive Shapes</title>
     <style>
         body {
             font-family: Arial, sans-serif;
         }
 
         .toolbox {
-            margin-bottom: 20px;
+            width: 100px;
+            float: left;
         }
 
-        .sticky-button {
-            padding: 10px 20px;
-            margin-right: 10px;
+        .shape {
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+            cursor: move;
+        }
+
+        #circle {
             background-color: #007BFF;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        #square {
+            background-color: #28A745;
+        }
+
+        #triangle {
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-bottom: 43.3px solid #FFC107;
+        }
+
+        #star {
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            background-color: #DC3545;
+        }
+
+        #heart {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            background-color: #FFC107;
+            transform: rotate(-45deg);
+            margin-left: -15px;
+            margin-top: 15px;
+            border-radius: 50%;
         }
 
         .canvas {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
             position: relative;
-            width: 800px;
-            height: 600px;
-            border: 2px solid #ccc;
-            background-color: #fff;
+            height: 300px;
         }
 
-        .sticky-note {
+        .draggable {
             position: absolute;
-            background-color: #FFC107;
-            padding: 10px;
-            border: 1px solid #ccc;
+        }
+
+        .text {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 5px;
             border-radius: 5px;
-            cursor: move;
         }
     </style>
 </head>
 <body>
     <div class="toolbox">
-        <button class="sticky-button" onclick="createStickyNote()">New Sticky Note</button>
+        <div class="shape" id="circle" draggable="true"></div>
+        <div class="shape" id="square" draggable="true"></div>
+        <div class="shape" id="triangle" draggable="true"></div>
+        <div class="shape" id="star" draggable="true"></div>
+        <div class="shape" id="heart" draggable="true"></div>
     </div>
-    <div class="canvas" id="canvas">
-        <!-- Sticky notes will be dynamically added here -->
+    <div class="canvas" id="canvas" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <!-- Shapes and text will be added here dynamically -->
     </div>
 
     <script>
-        var canvas = document.getElementById("canvas");
-        var counter = 1;
-
-        function createStickyNote() {
-            var stickyNote = document.createElement("div");
-            stickyNote.className = "sticky-note";
-            stickyNote.id = "note" + counter;
-            stickyNote.draggable = true;
-            stickyNote.innerHTML = '<div contenteditable="true">Click to edit</div>';
-            counter++;
-
-            stickyNote.addEventListener("dragstart", function(event) {
-                event.dataTransfer.setData("text/plain", event.target.id);
-            });
-
-            canvas.appendChild(stickyNote);
+        function allowDrop(event) {
+            event.preventDefault();
         }
 
-        canvas.addEventListener("dragover", function(event) {
-            event.preventDefault();
-        });
+        function drag(event) {
+            event.dataTransfer.setData("text", event.target.id);
+        }
 
-        canvas.addEventListener("drop", function(event) {
+        function drop(event) {
             event.preventDefault();
-            var data = event.dataTransfer.getData("text/plain");
-            var draggedElement = document.getElementById(data);
-            var offsetX = event.clientX - canvas.offsetLeft;
-            var offsetY = event.clientY - canvas.offsetTop;
+            var data = event.dataTransfer.getData("text");
+            var shape = document.getElementById(data);
+            var canvas = document.getElementById("canvas");
+            var clonedShape = shape.cloneNode(true);
+            clonedShape.id = data + "-" + new Date().getTime(); // Assign unique ID
+            clonedShape.classList.add("draggable");
+            clonedShape.draggable = true;
+            clonedShape.style.position = "absolute";
+            canvas.appendChild(clonedShape);
 
-            draggedElement.style.left = offsetX + "px";
-            draggedElement.style.top = offsetY + "px";
-        });
+            // Add text to the shape
+            var text = prompt("Enter text for the shape:");
+            if (text !== null) {
+                var textElement = document.createElement("div");
+                textElement.className = "text";
+                textElement.innerText = text;
+                clonedShape.appendChild(textElement);
+            }
+
+            // Make the shape draggable within the canvas
+            clonedShape.addEventListener("dragstart", drag);
+            clonedShape.addEventListener("dragend", dragEnd);
+        }
+
+        function dragEnd(event) {
+            event.preventDefault();
+            var offsetX = event.clientX - event.target.getBoundingClientRect().left;
+            var offsetY = event.clientY - event.target.getBoundingClientRect().top;
+            event.target.style.left = (event.clientX - offsetX) + "px";
+            event.target.style.top = (event.clientY - offsetY) + "px";
+        }
     </script>
 </body>
 </html>
